@@ -82,7 +82,7 @@ Information about read mapping is specified in the BAM file. BAM and SAM formats
 
 For example, you might want to identify reads with high quality alignments. This may be because you want to extract a set of reads for downstream analyses. This information is encoded in the BAM/SAM file as [flags](https://samtools.github.io/hts-specs/SAMv1.pdf). The following table gives an overview of the mandatory fields in the SAM format:
 
-![alt text](https://github.com/alielw/MolEcolStats-introNGSdata/blob/master/SAM%20fields.jpg)
+![alt text](https://github.com/alielw/APS-NGS-day2-AM/blob/master/SAM%20fields.jpg)
 
 The fields that will be most useful are the FLAGS and MAPQ. The Broad Institute have a useful website to understand the [FLAGS](https://broadinstitute.github.io/picard/explain-flags.html). In addition, the MAPQ field indicates the mapping quality of the read.
 
