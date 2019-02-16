@@ -151,6 +151,10 @@ You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools
 
         >samtools view file.bam
 
+You can also get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+
+        > samtools flagstat file.bam
+
 ## c. PRACTICAL ACTIVITY
 
 Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated using Tophat (96I.bam). We can do this in interactive mode.
