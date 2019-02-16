@@ -68,13 +68,18 @@ Tophat outputs a BAM file with the alignment information for each read.
 
 Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of **no-mixed**. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligning. We can ensure higher confidence in our mapping by specifying no-mixed, which means that a read is only mapped if both pairs align to the reference. You will compare mapping statistics between two Tophat runs, one with no-mixed and one without. This activity will comprise part of the course assessment.
 
-You should submit these commands as jobs to Sharc. Remember to specify different output folders for each command so that you don't overwrite any folders (-o). Our data is paired end and strand-specific. We will focus on one individual (60A). 
+You should submit these commands as jobs to Sharc. Remember to specify different output folders for each command so that you don't overwrite any folders (-o). Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
 * First, make an output folder.
 
         mkdir 60A
+ 
+* Copy the two fastq files into your output folder. You must be in interactive mode to do this.
+
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz PATH/60A
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz PATH/60A
         
-* Then make an executable script where you can specify the job requirements. 
+* Make an executable script where you can specify the job requirements. 
         
         emacs Tophat_60A.sh
         
@@ -148,13 +153,14 @@ You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools
 
 ## c. PRACTICAL ACTIVITY
 
-Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated (61A.bam). We can do this in interactive mode.
+Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated using Tophat (96I.bam). We can do this in interactive mode.
 
-* First, run interactive mode
+* Make a new folder and transfer the bam files into this folder. 
 
-        >qrsh
+        mkdir Quality_assessment
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam PATH/Quality_assessment
 
-* Then, view the first few lines of the bam file with samtools. Compare this output with the table above. Identify which column contains the FLAG field.
+* Then, view the first few lines of the bam file with samtools (samtools view BAM), Unix pipe (|) and Unix head. Compare this output with the table above. Identify which column contains the FLAG field.
 
         >samtools view 96I.bam | head
 
@@ -169,7 +175,7 @@ Count how many reads have all of the following features; are paired, first in th
 
 * Finally, using samtools (samtools view BAM), Unix pipe (|) and cut (cut -f["Column number"]), Unix pipe (|) and grep (grep -c "FLAG"), count how many reads have this FLAG.
 
-* Ask a demonstrator and they can provide you with the correct answer!
+* Ask a demonstrator for the correct answer!
 
 ## 5. Assemble transcripts
 
@@ -202,3 +208,13 @@ Generates a text file with a list (one per line) of GTF files to merge together 
 Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies. We must merge transcripts to get a reference set of transcripts across all individuals.
 
         >cuffmerge -g reference.gtf - s gtf_list.txt
+
+## d. PRACTICAL ACTIVITY
+
+Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files to generate on reference set of transcripts.
+
+* First, copy the gtf files to a new folder
+
+        
+
+        
