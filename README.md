@@ -179,10 +179,10 @@ Count how many reads have all of the following features; are paired, first in th
 
 ## 5. Assemble transcripts
 
-We can use [Cufflinks](http://cole-trapnell-lab.github.io/cufflinks/) to assemble gene transcripts. Cufflinks is part of the  “classic” RNA-Seq workflow, which includes read mapping with TopHat followed by assembly with Cufflinks. As Tophat is being superceded by [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), Cufflinks is being replaced by [StringTie](https://ccb.jhu.edu/software/stringtie/).
+We can use [Cufflinks](http://cole-trapnell-lab.github.io/cufflinks/) to assemble gene transcripts. Cufflinks is part of the  “classic” RNA-Seq workflow, which includes read mapping with TopHat followed by assembly with Cufflinks. As Tophat is being superceded by [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), Cufflinks is being replaced by [StringTie](https://ccb.jhu.edu/software/stringtie/). Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. Cufflinks will identify potential new transcripts.
 
 * **Generate gtf file for each sample**
-A GTF file contains information about assembled transcripts. We can use cufflinks to generate a set of transcripts for each sample.
+A GTF file contains information about assembled transcripts. We can use cufflinks to generate a set of transcripts for each sample. 
 
         >cufflinks sample.bam 
     
@@ -205,16 +205,28 @@ Generates a text file with a list (one per line) of GTF files to merge together 
 
 * **Merge gtf files**
 
-Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies. We must merge transcripts to get a reference set of transcripts across all individuals.
+Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies along with the reference set of already annotated transcripts. We must merge transcripts to get a complete reference set of transcripts across all individuals.
 
         >cuffmerge -g reference.gtf - s gtf_list.txt
 
 ## d. PRACTICAL ACTIVITY
 
-Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files to generate on reference set of transcripts.
+Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
 
 * First, copy the gtf files to a new folder
 
-        
+        cp ... PATH/FOLDER
+
+* Copy the reference gtf to the new folder. This contains all the annotated transcripts in the genome.
+
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf PATH/FOLDER
+
+* Generate list of gtf files
+
+        ls */transcripts.gtf > gtf_list.txt
+
+* Merge gtf files with cuffmerge
+
+        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt
 
         
