@@ -28,11 +28,13 @@ This command indexes the reference genome fasta file and outputs four files: ref
 
 ## a. PRACTICAL ACTIVITY
 
-Make an index of the reference genome. 
-    
+Make an index of the reference genome. You can run this command in interactive mode on Sharc.
+
+        bowtie2-build Heliconius_melpomene.Hmel1.dna.toplevel.fa.gz Hmel_db
+   
 ## 2. Align RNA-seq reads to reference
 
-Map RNA-seq reads to a reference genome using [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml). Reminder: We have paired-end, stranded RNA-seq data where the first read is from the opposite strand.
+Map RNA-seq reads to a reference genome using [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml).
  
  * **Map reads to genome with Tophat2**
  
@@ -50,6 +52,8 @@ There are many different mapping parameters you can specify, see [here](https://
 
 **--GTF** Supply TopHat with a set of gene model annotations and/or known transcripts, as a GTF 2.2 or GFF3 formatted file. If this option is provided, TopHat will first extract the transcript sequences and use Bowtie to align reads to this virtual transcriptome first. Only the reads that do not fully map to the transcriptome will then be mapped on the genome. The reads that did map on the transcriptome will be converted to genomic mappings (spliced as needed) and merged with the novel mappings and junctions in the final tophat output.
 
+**-p**  Use this many threads to align reads. The default is 1.
+
 The following two parameters should be specified if it is necessary to obtain very accurate and specific mapping data. A pair of reads that align with the expected relative mate orientation and range of distances between mates is said to align “concordantly”. If both mates have unique alignments, but the alignments do not match paired-end expectations (i.e. the mates aren’t in the expected relative orientation, or aren’t within the expected distance range, or both), the pair is said to align “discordantly”. Discordant alignments may be of particular interest, for instance, when seeking structural variants.
 
 **--no-discordant** For paired reads, report only concordant mappings.
@@ -58,10 +62,60 @@ The following two parameters should be specified if it is necessary to obtain ve
 
 Tophat outputs a BAM file with the alignment information for each read.
 
-## a. PRACTICAL ACTIVITY
+## b. PRACTICAL ACTIVITY
 
-Using Sharc, map RNA-seq reads of one individual to the reference genome. This activity will comprise part of the [course assessment](https://github.com/alielw/MolEcolStats-introNGSdata/tree/master). We will provide BAM files for all individuals for the rest of the practical.
-    
+Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of **no-mixed**. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligning. We can ensure higher confidence in our mapping by specifying no-mixed, which means that a read is only mapped if both pairs align to the reference. You will compare mapping statistics between two Tophat runs, one with no-mixed and one without. This activity will comprise part of the course assessment.
+
+You should submit these commands as jobs to Sharc. Remember to specify different output folders for each command so that you don't overwrite any folders (-o). Our data is paired end and strand-specific. We will focus on one individual (60A). 
+
+* First, make an output folder.
+
+        mkdir 60A
+        
+* Then make an executable script where you can specify the job requirements. 
+        
+        emacs Tophat_60A.sh
+        
+* Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command pwd to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2.
+
+        #$ -l h_rt=10:00:00
+        #$ -l rmem=10G
+        #$ -pe smp 10
+        #$ -wd PATH/60A
+        
+        source /usr/local/extras/Genomics/.bashrc
+        
+* Next, add the following commands to map reads to the reference without specifying no-mixed. You need to replace PATH with paths to the relevant folders.
+
+        tophat2 -p 10\
+        PATH/Hmel_db\
+        --library-type fr-firststrand\
+        -o PATH/60A\
+        PATH/60A.trimA_1.fastq.gz PATH/60A.trimA_2.fastq.gz 
+        
+* Final, submit your job
+        
+        qsub Tophat_60A.sh
+        
+* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify a different output folder to ensure files aren't overwritten.
+
+        mkdir 60A_nomixed
+        emacs Tophat_60A_nomixed.sh
+        
+        #$ -l h_rt=10:00:00
+        #$ -l rmem=10G
+        #$ -pe smp 10
+        #$ -wd PATH/60A_nomixed
+        
+        source /usr/local/extras/Genomics/.bashrc
+
+        tophat2 -p 10\
+        PATH/Hmel_db\
+        --library-type fr-firststrand\
+        --no-mixed\
+        -o PATH/60A_nomixed\
+        PATH/60A.trimA_1.fastq.gz PATH/60A.trimA_2.fastq.gz 
+
 ## 3. Visualise alignments
 
 * **Interactive Genome Viewer**
