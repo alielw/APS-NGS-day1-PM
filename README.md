@@ -28,8 +28,10 @@ This command indexes the reference genome fasta file and outputs four files: ref
 
 ## a. PRACTICAL ACTIVITY
 
-Make an index of the reference genome. You can run this command in interactive mode on Sharc.
-
+Make an index of the reference genome. You can run this command in interactive mode on Sharc. We need to load the bashrc file containing the path to bowtie2.
+        
+        qrsh
+        source /usr/local/extras/Genomics/.bashrc
         bowtie2-build Heliconius_melpomene.Hmel1.dna.toplevel.fa.gz Hmel_db
    
 ## 2. Align RNA-seq reads to reference
@@ -93,11 +95,11 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         -o PATH/60A\
         PATH/60A.trimA_1.fastq.gz PATH/60A.trimA_2.fastq.gz 
         
-* Final, submit your job
+* Finally, submit your job
         
         qsub Tophat_60A.sh
         
-* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify a different output folder to ensure files aren't overwritten.
+* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten.
 
         mkdir 60A_nomixed
         emacs Tophat_60A_nomixed.sh
@@ -146,13 +148,28 @@ You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools
 
 ## c. PRACTICAL ACTIVITY
 
-Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. 
+Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated (61A.bam). We can do this in interactive mode.
 
-* First, using samtools view, with Unix pipe and cut, extract the FLAG field.
+* First, run interactive mode
 
-* Second, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies the above information. 
+        >qrsh
 
-* Third, using samtools view, Unix pipe and cut, with grep -c, count how many reads have this FLAG.
+* Then, view the first few lines of the bam file with samtools. Compare this output with the table above. Identify which column contains the FLAG field.
+
+        >samtools view 96I.bam | head
+
+* Next, using samtools (samtools view BAM), with Unix pipe (|) and cut (cut -f["Column number"]), extract the FLAG field.
+
+* Then, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies that a read is all of the following:
+        
+        paired
+        is mapped in proper pair
+        first in pair
+        on the reverse strand
+
+* Finally, using samtools (samtools view BAM), Unix pipe (|) and cut (cut -f["Column number"]), Unix pipe (|) and grep (grep -c "FLAG"), count how many reads have this FLAG.
+
+* Ask a demonstrator and they can provide you with the correct answer!
 
 ## 5. Assemble transcripts
 
