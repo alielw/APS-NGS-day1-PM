@@ -53,7 +53,7 @@ Prepare the reference genome before mapping RNA-seq reads with [Bowtie2](http://
 
         >bowtie2-build reference_genome.fa reference_genome_db
 
-This command indexes the reference genome fasta file and outputs four files: reference_genome_db.1.ebwt, reference_genome_db.2.ebwt, reference_genome_db.rev.1.ebwt, and reference_genome_db.rev.2.ebwt. These files constitute the index.
+This command indexes the reference genome fasta file and outputs six files: db.1.bt2  db.2.bt2  db.3.bt2  db.4.bt2  db.rev.1.bt2  db.rev.2.bt2. These files constitute the index.
 
 ## a. PRACTICAL ACTIVITY
 
