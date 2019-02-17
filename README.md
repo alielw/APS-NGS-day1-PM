@@ -188,8 +188,52 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * **Interactive Genome Viewer**
 
+Download [Interactive Genome Viewer](http://software.broadinstitute.org/software/igv/download) to the Desktop.
+
 ## c. PRACTICAL ACTIVITY
 
+Lets view some of our read alignments to the reference genome with IGV. We can do this using a BAM file we already generated using Tophat (96I.bam).
+
+* First, copy the BAM file to your fastdata.
+
+        mkdir /fastdata/$USER/align/Quality_assessment
+        
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
+        
+* You need to index the BAM files with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+
+        cd /fastdata/$USER/align/Quality_assessment
+
+        samtools index 96I.bam
+
+* The copy the BAM file and index to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
+
+        cd Desktop
+        
+        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam .
+        
+        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam.bai .
+
+* Load the reference genome into IGV
+
+        Genomes/Load Genome from File
+
+* Load the BAM files into IGV
+
+        File/Load from File
+
+* Lets look at a particular scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffolds with three exons.
+        
+        scaffold        feature start   stop
+        Hmel200115	gene	1	1683	
+        Hmel200115	exon	1	415
+        Hmel200115	exon	496	1280
+        Hmel200115	exon	1564	1683
+        
+        Type Hmel200115 into the IGV search bar
+
+Using the coordinates above, locate the exons in the IGV viewer. Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
+        
 ---
 
 ## 4. Assess mapping quality
@@ -222,15 +266,11 @@ You can also get general statistics about the BAM files eg the number of mapped 
 
 Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated using Tophat (96I.bam). We can do this in interactive mode.
 
-* Make a new folder and transfer the bam files into this folder. 
-
-        mkdir /fastdata/$USER/align/Quality_assessment
-        
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
-        
+* Lets move into the folder you created earlier containing the BAM file. 
+     
         cd /fastdata/$USER/align/Quality_assessment
 
-* Then, view the first few lines of the bam file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
+* Then, view the first few lines of the BAM file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
 
         samtools view 96I.bam | head
 
