@@ -129,6 +129,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
 * Make an executable script where you can specify the job requirements. 
         
+        cd /fastdata/$USER/align/60A
         emacs Tophat_60A.sh
         
 * Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2.
