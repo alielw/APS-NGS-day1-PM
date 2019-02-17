@@ -274,7 +274,7 @@ Count how many reads have all of the following features; are paired, first in th
 
         samtools view 96I.bam | head
 
-* Next, print the FLAG field for the first few lines using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and Unix `head`. 
+* Next, print the FLAG field for the first few lines using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and Unix `head`. 
 
 * Then, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies that a read is all of the following. The FLAG will be an integer. 
         
@@ -283,7 +283,7 @@ Count how many reads have all of the following features; are paired, first in th
         first in pair
         on the reverse strand
 
-* Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
+* Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
 
 * Ask a demonstrator for the correct answer!
 
