@@ -33,7 +33,7 @@ Remember you can check your current working directory anytime with the command `
 It should show something like:
 
         pwd
-        /fastdata/myuser/align
+        /fastdata/$USER/align
 
 ---
 
