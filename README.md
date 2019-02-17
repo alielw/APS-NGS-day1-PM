@@ -167,12 +167,16 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         --no-mixed\
         -o /fastdata/$USER/align/60A_nomixed\
         /fastdata/$USER/align/60A_nomixed/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A_nomixed/60A.trimA_2.fastq.gz 
+        
+---
 
 ## 3. Visualise alignments
 
 * **Interactive Genome Viewer**
 
 ## b. PRACTICAL ACTIVITY
+
+---
 
 ## 4. Assess mapping quality
 
@@ -227,6 +231,8 @@ Count how many reads have all of the following features; are paired, first in th
 
 * Ask a demonstrator for the correct answer!
 
+---
+
 ## 5. Assemble transcripts
 
 We can use [Cufflinks](http://cole-trapnell-lab.github.io/cufflinks/) to assemble gene transcripts. Cufflinks is part of the  “classic” RNA-Seq workflow, which includes read mapping with TopHat followed by assembly with Cufflinks. As Tophat is being superceded by [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), Cufflinks is being replaced by [StringTie](https://ccb.jhu.edu/software/stringtie/). Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. Cufflinks will identify potential new transcripts.
@@ -277,4 +283,6 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
 * Merge gtf files with cuffmerge
 
-        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt    
+        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt   
+
+---
