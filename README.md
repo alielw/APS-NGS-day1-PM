@@ -66,7 +66,6 @@ Make an index of the reference genome.
 * Make a new folder in your align folder in fastdata
 
         mkdir /fastdata/$USER/align/ref
-        
         cd /fastdata/$USER/align/ref
 
 * Copy the reference genome to this folder
