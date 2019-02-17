@@ -2,9 +2,9 @@
 *Department of Animal and Plant Sciences, University of Sheffield*
 
 # Aligning Illumina RNA-seq data
-#### Victor Soria-Carrasco
+#### Alison Wright
 
-The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome. We will be using a dataset of expression data of 8 individuals of *Heliconius melpomene*. For each individual, two different wing regions have been sequenced.
+The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome and assemble transcripts. We will be using a dataset of expression data of 8 individuals of *Heliconius melpomene*. For each individual, two different wing regions have been sequenced.
 
 ## Table of contents
 
@@ -138,7 +138,7 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         
         source /usr/local/extras/Genomics/.bashrc
         
-* Next, add the following commands to map reads to the reference without specifying no-mixed. You need to replace PATH with paths to the relevant folders.
+* Next, add the following commands to map reads to the reference without specifying no-mixed.
 
         tophat2 -p 10\
         /fastdata/$USER/align/ref/Hmel_db\
@@ -163,7 +163,7 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         source /usr/local/extras/Genomics/.bashrc
 
         tophat2 -p 10\
-        PATH/Hmel_db\
+        /fastdata/$USER/align/ref/Hmel_db\
         --library-type fr-firststrand\
         --no-mixed\
         -o /fastdata/$USER/align/60A_nomixed\
@@ -208,6 +208,7 @@ Count how many reads have all of the following features; are paired, first in th
 * Make a new folder and transfer the bam files into this folder. 
 
         mkdir /fastdata/$USER/align/Quality_assessment
+        
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
 
 * Then, view the first few lines of the bam file with samtools (samtools view BAM), Unix pipe (|) and Unix head. Compare this output with the table above. Identify which column contains the FLAG field.
