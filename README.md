@@ -1,6 +1,12 @@
-# Aligning Illumina RNA-seq data
+**_Advanced Data Analysis - Introduction to NGS data analysis_**<br>
+*Department of Animal and Plant Sciences, University of Sheffield*
 
-Pipeline to 
+# Aligning Illumina RNA-seq data
+#### Victor Soria-Carrasco
+
+The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome. We will be using a dataset of expression data of 8 individuals of *Heliconius melpomene*. For each individual, two different wing regions have been sequenced.
+
+## Table of contents
 
 1. Prepare reference genome
 
@@ -11,6 +17,30 @@ Pipeline to
 4. Assess mapping quality
 
 5. Assemble transcripts
+
+---
+---
+
+## Initial set up
+First of all, this tutorial must be run using an interactive session in ShARC. You will also submit jobs to ShARC. For that, you should log in into ShARC with `ssh`, and then request an interactive session with `qrsh`. Your shell prompt should show `sharc-nodeXXX` (XXX being a number between 001 and 172) and not `@sharc-login1` nor `@sharc-login2`.
+
+For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory:
+```bash
+cd /fastdata/$USER
+mkdir align
+cd align
+```
+Remember you can check your current working directory anytime with the command `pwd`.
+It should show something like:
+```bash
+pwd
+```
+>`´/fastdata/myuser/align`´<br>
+
+---
+---
+
+## Programmes
 
 There are a number of different programs that can be used to align RNA-seq reads to a reference genome. There are two types of aligners: Splice-unaware and Splice-aware. Splice-unaware aligners are not aware of exon/intron junctions and are therefore only appropriate for mapping to a transcriptome. Splice-aware aligners map reads over exon/intro junctions and are appropriate for aligning reads to a genome reference and the analysis of gene expression levels. This is an important point to consider when choosing an aligner and why it is necessary to use different programs for RNA- versus DNA-seq data.
 
@@ -28,10 +58,26 @@ This command indexes the reference genome fasta file and outputs four files: ref
 
 ## a. PRACTICAL ACTIVITY
 
-Make an index of the reference genome. You can run this command in interactive mode on Sharc. We need to load the bashrc file containing the path to bowtie2.
-        
+Make an index of the reference genome.
+
+* First load an interactive session on ShARC.
+
         qrsh
+
+* Make a new folder in your align folder in fastdata
+
+        mkdir /fastdata/$USER/align/ref
+
+* Copy the reference genome to this folder
+
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.dna.toplevel.fa.gz /fastdata/$USER/align/ref
+
+* We need to load the bashrc file containing the path to bowtie2.
+        
         source /usr/local/extras/Genomics/.bashrc
+        
+* Index the genome
+
         bowtie2-build Heliconius_melpomene.Hmel1.dna.toplevel.fa.gz Hmel_db
    
 ## 2. Align RNA-seq reads to reference
@@ -72,12 +118,12 @@ You should submit these commands as jobs to Sharc. Remember to specify different
 
 * First, make an output folder.
 
-        mkdir 60A
+        mkdir /fastdata/$USER/align/60A
  
 * Copy the two fastq files into your output folder. You must be in interactive mode to do this.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz PATH/60A
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz PATH/60A
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/60A
         
 * Make an executable script where you can specify the job requirements. 
         
@@ -88,17 +134,17 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
         #$ -pe smp 10
-        #$ -wd PATH/60A
+        #$ -wd /fastdata/$USER/align/60A
         
         source /usr/local/extras/Genomics/.bashrc
         
 * Next, add the following commands to map reads to the reference without specifying no-mixed. You need to replace PATH with paths to the relevant folders.
 
         tophat2 -p 10\
-        PATH/Hmel_db\
+        /fastdata/$USER/align/ref/Hmel_db\
         --library-type fr-firststrand\
-        -o PATH/60A\
-        PATH/60A.trimA_1.fastq.gz PATH/60A.trimA_2.fastq.gz 
+        -o /fastdata/$USER/align/60A\
+        /fastdata/$USER/align/60A/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A/60A.trimA_2.fastq.gz 
         
 * Finally, submit your job
         
@@ -106,13 +152,13 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         
 * Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten.
 
-        mkdir 60A_nomixed
+        mkdir /fastdata/$USER/align/60A_nomixed
         emacs Tophat_60A_nomixed.sh
         
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
         #$ -pe smp 10
-        #$ -wd PATH/60A_nomixed
+        #$ -wd /fastdata/$USER/align/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
 
@@ -120,8 +166,8 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         PATH/Hmel_db\
         --library-type fr-firststrand\
         --no-mixed\
-        -o PATH/60A_nomixed\
-        PATH/60A.trimA_1.fastq.gz PATH/60A.trimA_2.fastq.gz 
+        -o /fastdata/$USER/align/60A_nomixed\
+        /fastdata/$USER/align/60A_nomixed/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A_nomixed/60A.trimA_2.fastq.gz 
 
 ## 3. Visualise alignments
 
@@ -161,12 +207,12 @@ Count how many reads have all of the following features; are paired, first in th
 
 * Make a new folder and transfer the bam files into this folder. 
 
-        mkdir Quality_assessment
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam PATH/Quality_assessment
+        mkdir /fastdata/$USER/align/Quality_assessment
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
 
 * Then, view the first few lines of the bam file with samtools (samtools view BAM), Unix pipe (|) and Unix head. Compare this output with the table above. Identify which column contains the FLAG field.
 
-        >samtools view 96I.bam | head
+        samtools view 96I.bam | head
 
 * Next, using samtools (samtools view BAM), with Unix pipe (|) and cut (cut -f["Column number"]), extract the FLAG field.
 
@@ -217,13 +263,13 @@ Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.i
 
 Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
 
-* First, copy the gtf files to a new folder
+* First, copy the folder containing the gtf files to your fastdata folder
 
-        cp ... PATH/FOLDER
+        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Cufflinks_output /fastdata/$USER/align/
 
 * Copy the reference gtf to the new folder. This contains all the annotated transcripts in the genome.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf PATH/FOLDER
+        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf /fastdata/$USER/align/Cufflinks_output
 
 * Generate list of gtf files
 
