@@ -304,7 +304,7 @@ As with Tophat, there are many different mapping parameters you can specify, see
 
 **–library-type** Library type
 
-Cufflinks produces three output files: transcripts.gtf, isoforms.fpkm_tracking, genes.fpkm_tracking
+Cufflinks produces four output files: transcripts.gtf, isoforms.fpkm_tracking, genes.fpkm_tracking, skipped.gtf
 
 **transcripts.gtf**
 This GTF file contains Cufflinks’ assembled isoforms. The first 7 columns are standard GTF, and the last column contains attributes, some of which are also standardized (“gene_id”, and “transcript_id”). There one GTF record per row, and each record represents either a transcript or an exon within a transcript. Further description of the format can be found [here](https://github.com/alielw/APS-NGS-day2-AM/blob/master/GTF%20format.jpg)
