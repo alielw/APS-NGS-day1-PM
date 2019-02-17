@@ -275,11 +275,15 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
 * Copy the reference gtf to the new folder. This contains all the annotated transcripts in the genome.
 
-        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf /fastdata/$USER/align/Cufflinks_output
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf /fastdata/$USER/align/Cufflinks_output
+
+* View list of gtf files
+
+        for i in */*transcripts.gtf; do echo $i; done
 
 * Generate list of gtf files
 
-        ls */transcripts.gtf > gtf_list.txt
+         for i in */*transcripts.gtf; do echo $i; done > gtf_list.txt
 
 * Merge gtf files with cuffmerge
 
