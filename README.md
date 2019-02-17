@@ -157,6 +157,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten.
 
         mkdir /fastdata/$USER/align/60A_nomixed
+        
+        cd /fastdata/$USER/align/60A_nomixed
+        
         emacs Tophat_60A_nomixed.sh
         
         #$ -l h_rt=10:00:00
@@ -165,7 +168,8 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -wd /fastdata/$USER/align/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
-
+        
+        #!/bin/bash
         tophat2 -p 10\
         /fastdata/$USER/align/ref/Hmel_db\
         --library-type fr-firststrand\
