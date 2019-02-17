@@ -77,7 +77,7 @@ Make an index of the reference genome.
         
 * Index the genome
 
-        bowtie2-build Heliconius_melpomene.Hmel1.dna.toplevel.fa.gz Hmel_db
+        bowtie2-build Hmel2.fa Hmel2_db
    
 ## 2. Align RNA-seq reads to reference
 
