@@ -80,7 +80,7 @@ Make an index of the reference genome.
 
         bowtie2-build Hmel2.fa Hmel2_db
 
-This commands takes around five minutes to finish. While this is running, move onto section two to prepare your commands for Tophat. When `bowtie2-build` has finished you can then run Tophat.
+This commands takes around five minutes to finish. While this is running, move onto section two to familised yourself with Tophat and prepare your command to map reads to the reference genome. When `bowtie2-build` has finished you can then run Tophat.
    
 ## 2. Align RNA-seq reads to reference
 
