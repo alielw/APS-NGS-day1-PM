@@ -4,7 +4,7 @@
 # Aligning Illumina RNA-seq data
 #### Alison Wright
 
-The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome and assemble transcripts. We will be using a dataset of expression data of 8 individuals of *Heliconius melpomene*. For each individual, two different wing regions have been sequenced.
+The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome and assemble transcripts. We will be using a dataset of expression data of multiple individuals of *Heliconius melpomene*.
 
 ## Table of contents
 
@@ -18,7 +18,6 @@ The aim of this practical is to learn how to align Illumina RNA-seq data to a re
 
 5. Assemble transcripts
 
----
 ---
 
 ## Initial set up
@@ -38,13 +37,14 @@ pwd
 >`´/fastdata/myuser/align`´<br>
 
 ---
----
 
 ## Programmes
 
 There are a number of different programs that can be used to align RNA-seq reads to a reference genome. There are two types of aligners: Splice-unaware and Splice-aware. Splice-unaware aligners are not aware of exon/intron junctions and are therefore only appropriate for mapping to a transcriptome. Splice-aware aligners map reads over exon/intro junctions and are appropriate for aligning reads to a genome reference and the analysis of gene expression levels. This is an important point to consider when choosing an aligner and why it is necessary to use different programs for RNA- versus DNA-seq data.
 
 Potential aligners include [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), [STAR](https://github.com/alexdobin/STAR) and [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml). We will be using Tophat2 in this practical as it is a standard, widely used approach for Illumina data. However, HISAT2 is the next generation of spliced aligner from the same research group that developed TopHat and has considerable advantages in terms of speed and memory requirements. When choosing an aligner appropriate to your study, it is useful to refer to the numerous studies that compare performance statistics across programs (eg [PeerJ review](https://peerj.com/preprints/27283/), [PLoS One review](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0190152). The blog [RNA-Seq Blog](https://www.rna-seqblog.com/review-of-rna-seq-data-analysis-tools/) is a valuable resource.  
+
+---
 
 ## 1. Prepare reference genome
 
@@ -278,6 +278,4 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
 * Merge gtf files with cuffmerge
 
-        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt
-
-        
+        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt    
