@@ -227,21 +227,23 @@ Count how many reads have all of the following features; are paired, first in th
         mkdir /fastdata/$USER/align/Quality_assessment
         
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
+        
+        cd /fastdata/$USER/align/Quality_assessment
 
-* Then, view the first few lines of the bam file with samtools (`samtools view BAM`), Unix pipe (`|``) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
+* Then, view the first few lines of the bam file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
 
         samtools view 96I.bam | head
 
-* Next, using samtools (`samtools view BAM`), with Unix pipe (`|`) and cut (`cut -f["Column number"]`), extract the FLAG field.
+* Next, print the FLAG field for the first few lines using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and Unix `head`. 
 
-* Then, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies that a read is all of the following:
+* Then, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies that a read is all of the following. The FLAG will be an integer. 
         
         paired
         is mapped in proper pair
         first in pair
         on the reverse strand
 
-* Finally, using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`), count how many reads have this FLAG.
+* Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
 
 * Ask a demonstrator for the correct answer!
 
@@ -256,7 +258,7 @@ A GTF file contains information about assembled transcripts. We can use cufflink
 
         >cufflinks sample.bam 
     
-As with Tophat, there are many different mapping parameters you can specify, see [here](http://cole-trapnell-lab.github.io/cufflinks/cufflinks/index.html). While it is often suffient to run Cufflinks with default settings, there are a number of parameters that should be considered:
+As with Tophat, there are many different mapping parameters you can specify, see [here](http://cole-trapnell-lab.github.io/cufflinks/cufflinks/index.html). While it is often sufficient to run Cufflinks with default settings, there are a number of parameters that should be considered:
 
 **–GTF-guide** Tells Cufflinks to use the supplied reference annotation a GFF/GTF file to guide RABT assembly. Reference transcripts will be tiled with faux-reads to provide additional information in assembly. Output will include all reference transcripts as well as any novel genes and isoforms that are assembled.
 
@@ -281,26 +283,28 @@ Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.i
 
 ## e. PRACTICAL ACTIVITY
 
-Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
+Cufflinks takes a couple of hours to run, so we have already generated gtf files for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
 
 * First, copy the folder containing the gtf files to your fastdata folder
 
         cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Cufflinks_output /fastdata/$USER/align/
 
-* Copy the reference gtf to the new folder. This contains all the annotated transcripts in the genome.
+* Copy the reference gff to the new folder. This contains all the annotated transcripts in the genome.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Heliconius_melpomene.Hmel1.42.gtf /fastdata/$USER/align/Cufflinks_output
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.gff /fastdata/$USER/align/Cufflinks_output
 
 * View list of gtf files
 
+        cd /fastdata/$USER/align/Cufflinks_output
+
         for i in */*transcripts.gtf; do echo $i; done
 
-* Generate list of gtf files
+* Generate list of all gtf files
 
          for i in */*transcripts.gtf; do echo $i; done > gtf_list.txt
 
 * Merge gtf files with cuffmerge
 
-        cuffmerge -g Heliconius_melpomene.Hmel1.42.gtf - s gtf_list.txt   
+        cuffmerge -g Hmel2.gff -s gtf_list.txt   
 
 ---
