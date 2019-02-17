@@ -118,18 +118,21 @@ Map RNA-seq reads to the reference genome. This practical will illustrate the ef
 
 You should submit these commands as jobs to ShARC. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
-* First, make an output folder.
+* First, make some output folders.
 
-        mkdir /fastdata/$USER/align/60A
+        mkdir /fastdata/$USER/align/Trimmed_data
+        
+        mkdir /fastdata/$USER/align/Tophat
+        mkdir /fastdata/$USER/align/Tophat/60A
  
 * Copy the two fastq files into your output folder. You must be in interactive mode to do this.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/60A
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
         
 * Make an executable script where you can specify the job requirements. 
         
-        cd /fastdata/$USER/align/60A
+        cd /fastdata/$USER/align/Tophat/60A
         emacs Tophat_60A.sh
         
 * Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2.
@@ -138,17 +141,17 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
         #$ -pe smp 10
-        #$ -wd /fastdata/$USER/align/60A
+        #$ -wd /fastdata/$USER/align/Tophat/60A
         
         source /usr/local/extras/Genomics/.bashrc
         
 * Next, add the following commands to map reads to the reference without specifying no-mixed.
 
         tophat2 -p 10\
-        /fastdata/$USER/align/ref/Hmel_db\
+        /fastdata/$USER/align/ref/Hmel2_db\
         --library-type fr-firststrand\
-        -o /fastdata/$USER/align/60A\
-        /fastdata/$USER/align/60A/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A/60A.trimA_2.fastq.gz 
+        -o /fastdata/$USER/align/Tophat/60A\
+        /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
         
 * Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
         
@@ -156,9 +159,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
 * Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten.
 
-        mkdir /fastdata/$USER/align/60A_nomixed
+        mkdir /fastdata/$USER/align/Tophat/60A_nomixed
         
-        cd /fastdata/$USER/align/60A_nomixed
+        cd /fastdata/$USER/align/Tophat/60A_nomixed
         
         emacs Tophat_60A_nomixed.sh
         
@@ -166,16 +169,18 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
         #$ -pe smp 10
-        #$ -wd /fastdata/$USER/align/60A_nomixed
+        #$ -wd /fastdata/$USER/align/Tophat/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
         
         tophat2 -p 10\
-        /fastdata/$USER/align/ref/Hmel_db\
+        /fastdata/$USER/align/ref/Hmel2_db\
         --library-type fr-firststrand\
         --no-mixed\
-        -o /fastdata/$USER/align/60A_nomixed\
-        /fastdata/$USER/align/60A_nomixed/60A.trimA_1.fastq.gz /fastdata/$USER/align/60A_nomixed/60A.trimA_2.fastq.gz 
+        -o /fastdata/$USER/align/Tophat/60A_nomixed\
+        /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
+        
+        qsub Tophat_60A_nomixed.sh
         
 ---
 
