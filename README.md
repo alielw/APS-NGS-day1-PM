@@ -162,6 +162,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         emacs Tophat_60A_nomixed.sh
         
+        #!/bin/bash
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
         #$ -pe smp 10
@@ -169,7 +170,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         source /usr/local/extras/Genomics/.bashrc
         
-        #!/bin/bash
         tophat2 -p 10\
         /fastdata/$USER/align/ref/Hmel_db\
         --library-type fr-firststrand\
