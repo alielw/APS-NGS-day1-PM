@@ -53,7 +53,7 @@ Prepare the reference genome before mapping RNA-seq reads with [Bowtie2](http://
 
         >bowtie2-build reference_genome.fa reference_genome_db
 
-This command indexes the reference genome fasta file and outputs six files: db.1.bt2  db.2.bt2  db.3.bt2  db.4.bt2  db.rev.1.bt2  db.rev.2.bt2. These files constitute the index.
+This command indexes the reference genome fasta file and outputs six files: .1.bt2  .2.bt2  .3.bt2  .4.bt2  .rev.1.bt2  .rev.2.bt2. These files constitute the index.
 
 ## a. PRACTICAL ACTIVITY
 
@@ -78,7 +78,7 @@ Make an index of the reference genome.
         
 * Index the genome
 
-        bowtie2-build Hmel2.fa Hmel2_db
+        bowtie2-build Hmel2.fa Hmel2
 
 This commands takes around five minutes to finish. While this is running, move onto section two to familised yourself with Tophat and prepare your command to map reads to the reference genome. When `bowtie2-build` has finished you can then run Tophat.
    
@@ -148,9 +148,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Next, add the following commands to map reads to the reference without specifying no-mixed.
 
         tophat2 -p 10\
-        /fastdata/$USER/align/ref/Hmel2_db\
         --library-type fr-firststrand\
         -o /fastdata/$USER/align/Tophat/60A\
+        /fastdata/$USER/align/ref/Hmel2\
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
         
 * Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
@@ -174,10 +174,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         source /usr/local/extras/Genomics/.bashrc
         
         tophat2 -p 10\
-        /fastdata/$USER/align/ref/Hmel2_db\
         --library-type fr-firststrand\
         --no-mixed\
         -o /fastdata/$USER/align/Tophat/60A_nomixed\
+        /fastdata/$USER/align/ref/Hmel2\
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
         
         qsub Tophat_60A_nomixed.sh
