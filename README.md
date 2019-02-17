@@ -174,7 +174,7 @@ You should submit these commands as jobs to Sharc. Remember to specify different
 
 * **Interactive Genome Viewer**
 
-## b. PRACTICAL ACTIVITY
+## c. PRACTICAL ACTIVITY
 
 ---
 
@@ -204,7 +204,7 @@ You can also get general statistics about the BAM files eg the number of mapped 
 
         >samtools flagstat file.bam
 
-## c. PRACTICAL ACTIVITY
+## d. PRACTICAL ACTIVITY
 
 Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated using Tophat (96I.bam). We can do this in interactive mode.
 
@@ -265,7 +265,7 @@ Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.i
 
         >cuffmerge -g reference.gtf - s gtf_list.txt
 
-## d. PRACTICAL ACTIVITY
+## e. PRACTICAL ACTIVITY
 
 Cufflinks takes a couple of hours to run, so we have already generated gtf files for you for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
 
