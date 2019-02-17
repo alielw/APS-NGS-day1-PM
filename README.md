@@ -317,13 +317,13 @@ Generates a text file with a list (one per line) of GTF files to merge together 
 
 * **Merge gtf files**
 
-Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies along with the reference set of already annotated transcripts. We must merge transcripts to get a complete reference set of transcripts across all individuals.
+Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies. We must merge transcripts to get a complete reference set of transcripts across all individuals.
 
         >cuffmerge -g reference.gtf - s gtf_list.txt
 
 ## e. PRACTICAL ACTIVITY
 
-Cufflinks takes a couple of hours to run, so we have already generated gtf files for each sample. In this practical, we will merge all the gtf files, together with the reference set of annotated transcripts, to generate a complete set of transcripts.
+Cufflinks takes a couple of hours to run, so we have already generated gtf files for each sample. In this practical, we will merge all the gtf files to generate a complete set of transcripts. We will also include the reference gff as Cufflinks will use it to attach gene names and other metadata to the merged catalog.
 
 * First, copy the folder containing the gtf files to your fastdata folder
 
