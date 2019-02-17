@@ -128,7 +128,7 @@ You should submit these commands as jobs to Sharc. Remember to specify different
         
         emacs Tophat_60A.sh
         
-* Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command pwd to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2.
+* Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2.
 
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
@@ -210,11 +210,11 @@ Count how many reads have all of the following features; are paired, first in th
         
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
 
-* Then, view the first few lines of the bam file with samtools (samtools view BAM), Unix pipe (|) and Unix head. Compare this output with the table above. Identify which column contains the FLAG field.
+* Then, view the first few lines of the bam file with samtools (`samtools view BAM`), Unix pipe (`|``) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
 
         samtools view 96I.bam | head
 
-* Next, using samtools (samtools view BAM), with Unix pipe (|) and cut (cut -f["Column number"]), extract the FLAG field.
+* Next, using samtools (`samtools view BAM`), with Unix pipe (`|`) and cut (`cut -f["Column number"]`), extract the FLAG field.
 
 * Then, using the [Broad Institute website](https://broadinstitute.github.io/picard/explain-flags.html) identify the FLAG which specifies that a read is all of the following:
         
@@ -223,7 +223,7 @@ Count how many reads have all of the following features; are paired, first in th
         first in pair
         on the reverse strand
 
-* Finally, using samtools (samtools view BAM), Unix pipe (|) and cut (cut -f["Column number"]), Unix pipe (|) and grep (grep -c "FLAG"), count how many reads have this FLAG.
+* Finally, using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f["Column number"]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`), count how many reads have this FLAG.
 
 * Ask a demonstrator for the correct answer!
 
@@ -238,7 +238,7 @@ A GTF file contains information about assembled transcripts. We can use cufflink
     
 As with Tophat, there are many different mapping parameters you can specify, see [here](http://cole-trapnell-lab.github.io/cufflinks/cufflinks/index.html). While it is often suffient to run Cufflinks with default settings, there are a number of parameters that should be considered:
 
-**–GTF-guide** Tells Cufflinks to use the supplied reference annotation a GFF file to guide RABT assembly. Reference transcripts will be tiled with faux-reads to provide additional information in assembly. Output will include all reference transcripts as well as any novel genes and isoforms that are assembled.
+**–GTF-guide** Tells Cufflinks to use the supplied reference annotation a GFF/GTF file to guide RABT assembly. Reference transcripts will be tiled with faux-reads to provide additional information in assembly. Output will include all reference transcripts as well as any novel genes and isoforms that are assembled.
 
 **–library-type** Library type
 
