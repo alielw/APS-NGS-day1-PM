@@ -198,7 +198,7 @@ You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools
 
 You can also get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-        > samtools flagstat file.bam
+        >samtools flagstat file.bam
 
 ## c. PRACTICAL ACTIVITY
 
