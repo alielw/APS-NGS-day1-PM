@@ -200,7 +200,7 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
         
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
         
-* You need to index the BAM files with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
         cd /fastdata/$USER/align/Quality_assessment
 
@@ -218,7 +218,7 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
 
         Genomes/Load Genome from File
 
-* Load the BAM files into IGV
+* Load the BAM file into IGV
 
         File/Load from File
 
