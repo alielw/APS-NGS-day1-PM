@@ -135,19 +135,19 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cd /fastdata/$USER/align/Tophat/60A
         emacs Tophat_60A.sh
         
-* Tophat2 normally requires around 10Gb of memory and across 10 threads will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2. You need to replace `$USER` with your username.
+* Tophat2 normally requires around 10Gb of memory and across 1 thread will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2. You need to replace `$USER` with your username.
 
         #!/bin/bash
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
-        #$ -pe smp 10
+        #$ -pe smp 1
         #$ -wd /fastdata/$USER/align/Tophat/60A
         
         source /usr/local/extras/Genomics/.bashrc
         
 * Next, add the following commands to map reads to the reference without specifying no-mixed.
 
-        tophat2 -p 10\
+        tophat2 -p 1\
         --library-type fr-firststrand\
         -o /fastdata/$USER/align/Tophat/60A\
         /fastdata/$USER/align/ref/Hmel2\
@@ -168,12 +168,12 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #!/bin/bash
         #$ -l h_rt=10:00:00
         #$ -l rmem=10G
-        #$ -pe smp 10
+        #$ -pe smp 1
         #$ -wd /fastdata/$USER/align/Tophat/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
         
-        tophat2 -p 10\
+        tophat2 -p 1\
         --library-type fr-firststrand\
         --no-mixed\
         -o /fastdata/$USER/align/Tophat/60A_nomixed\
