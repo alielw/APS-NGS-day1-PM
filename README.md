@@ -347,7 +347,8 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
         cuffmerge -g Hmel2.gff -s/fastdata/$USER/align/ref/Hmel2.fa gtf_list.txt 
 
-* Count how many transcripts there are. This should be equal to the number of lines, which you can count with Unix (`wc -l`)
+* Count how many transcripts there are. This should be equal to the number of lines, which you can count with Unix 
+(`wc -l`)
 
         wc -l merged_asm/merged.gtf
 
