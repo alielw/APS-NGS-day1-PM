@@ -157,7 +157,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         qsub Tophat_60A.sh
         
-* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten.
+* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
 
         mkdir /fastdata/$USER/align/Tophat/60A_nomixed
         
