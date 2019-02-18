@@ -351,5 +351,9 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 (`wc -l`)
 
         wc -l merged_asm/merged.gtf
+        
+* Correct a bug in cuffmerge. We noitced that there are a few reads that aren't stranded which then generate an error. These need to be removed from the gtf file with the following:
+
+        grep -v -P "\t\.\t\.\t\." merged.gtf > merged_allstranded.gtf
 
 ---
