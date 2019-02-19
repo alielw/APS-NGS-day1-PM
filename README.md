@@ -110,7 +110,7 @@ The following two parameters should be specified if it is necessary to obtain ve
 
 **--no-mixed** For paired reads, only report read alignments if both reads in a pair can be mapped (by default, if TopHat cannot find a concordant or discordant alignment for both reads in a pair, it will find and report alignments for each read separately; this option disables that behavior).
 
-Tophat outputs a BAM file with the alignment information for each read.
+Tophat outputs a BAM file with the alignment information for each read (accepted_hits.bam).
 
 ## b. PRACTICAL ACTIVITY
 
@@ -242,7 +242,22 @@ Whilst IGV allows us to examine specific regions of the genome, it not easy to s
 
 * **Tophat Output**
 
-Tophat produces an output log file with various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped etc
+Tophat produces an output log file (align_summary.txt) with various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. Eg:
+
+        Left reads:
+                Input     :  18214710
+                Mapped   :   7665434 (42.1% of input)
+                of these:    366828 (4.8%) have multiple alignments (4783 have >20)
+        Right reads:
+                Input     :  18214710
+                Mapped   :   7678151 (42.2% of input)
+                of these:    368728 (4.8%) have multiple alignments (4830 have >20)
+        42.1% overall read mapping rate.
+
+        Aligned pairs:   6851101
+        of these:        337896 (4.9%) have multiple alignments
+                         27231 (0.4%) are discordant alignments
+        37.5% concordant pair alignment rate.
 
 * **BAM format**
 
@@ -261,6 +276,22 @@ You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools
 You can also get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
         >samtools flagstat file.bam
+        
+Eg:
+        
+        16989295 + 0 in total (QC-passed reads + QC-failed reads)
+        1645710 + 0 secondary
+        0 + 0 supplementary
+        0 + 0 duplicates
+        16989295 + 0 mapped (100.00% : N/A)
+        15343585 + 0 paired in sequencing
+        7665434 + 0 read1
+        7678151 + 0 read2
+        13310548 + 0 properly paired (86.75% : N/A)
+        13702202 + 0 with itself and mate mapped
+        1641383 + 0 singletons (10.70% : N/A)
+        70752 + 0 with mate mapped to a different chr
+        39370 + 0 with mate mapped to a different chr (mapQ>=5)
 
 ## d. PRACTICAL ACTIVITY
 
