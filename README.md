@@ -192,8 +192,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * **Interactive Genome Viewer**
 
-Download [Interactive Genome Viewer](http://software.broadinstitute.org/software/igv/download) to the Desktop.
-
 ## c. PRACTICAL ACTIVITY
 
 Lets view some of our read alignments to the reference genome with IGV. We can do this using a BAM file we already generated using Tophat (96I.bam).
@@ -214,15 +212,13 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
 
         samtools index 96I_Hmel200115.bam
 
-* The copy the BAM file, index and reference genome to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
-
-        cd Desktop
+* The copy the BAM file, index and reference genome to your desktop.
         
-        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam .
+        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam
         
-        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai .
+        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai
         
-        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/ref/Hmel2.fa .
+        /fastdata/$USER/align/ref/Hmel2.fa
 
 * Load the reference genome into IGV
 
