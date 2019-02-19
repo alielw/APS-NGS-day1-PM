@@ -130,7 +130,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
         
-* Make an executable script where you can specify the job requirements. 
+* Make an executable script where you can specify the job requirements. I use `emacs` to edit files, but you can use `nano` if you prefer.
         
         cd /fastdata/$USER/align/Tophat/60A
         emacs Tophat_60A.sh
@@ -152,6 +152,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         -o /fastdata/$USER/align/Tophat/60A\
         /fastdata/$USER/align/ref/Hmel2\
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
+
+* Finally, close and save the file
+
+        Ctrl+X Ctrl+C
         
 * Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
         
@@ -206,13 +210,15 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
 
         samtools index 96I.bam
 
-* The copy the BAM file and index to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
+* The copy the BAM file, index and refernece genome to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
 
         cd Desktop
         
         scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam .
         
         scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam.bai .
+        
+        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/ref/Hmel2.fa .
 
 * Load the reference genome into IGV
 
