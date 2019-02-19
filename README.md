@@ -208,7 +208,7 @@ Load the BAM file into IGV
 
 ## c. PRACTICAL ACTIVITY
 
-Lets view some of our read alignments to the reference genome with IGV. We have already loaded IGV, and taken a [screenshot] (https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg).
+Lets view some of our read alignments to the reference genome with IGV. We have already loaded IGV, and taken a [screenshot](https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg).
 
 * Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
         
