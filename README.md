@@ -204,19 +204,23 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
         
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
         
-* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
         cd /fastdata/$USER/align/Quality_assessment
 
-        samtools index 96I.bam
+        samtools view -b -h 96I.bam "Hmel200115" > 96I_Hmel200115.bam
+        
+* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
-* The copy the BAM file, index and refernece genome to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
+        samtools index 96I_Hmel200115.bam
+
+* The copy the BAM file, index and reference genome to your desktop. You need to open a new terminal window for this. You will also have to replace $USER with your Sheffield username.
 
         cd Desktop
         
-        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam .
+        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam .
         
-        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I.bam.bai .
+        scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai .
         
         scp $USER@sharc.shef.ac.uk:/fastdata/$USER/align/ref/Hmel2.fa .
 
@@ -228,7 +232,7 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
 
         File/Load from File
 
-* Lets look at a particular scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffolds with three exons.
+* Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
         
         scaffold        feature start   stop
         Hmel200115	gene	1	1683	
