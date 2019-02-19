@@ -71,10 +71,6 @@ Make an index of the reference genome.
 * Copy the reference genome to this folder
 
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.fa /fastdata/$USER/align/ref
-
-* We need to load the bashrc file containing the path to bowtie2.
-        
-        source /usr/local/extras/Genomics/.bashrc
         
 * Index the genome
 
