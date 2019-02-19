@@ -192,41 +192,23 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * **Interactive Genome Viewer**
 
-## c. PRACTICAL ACTIVITY
+We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-Lets view some of our read alignments to the reference genome with IGV. We can do this using a BAM file we already generated using Tophat (96I.bam).
+        samtools index sample.bam
 
-* First, copy the BAM file to your fastdata.
+Then you have to transfer the BAM file, index and reference genome to the Desktop.
 
-        mkdir /fastdata/$USER/align/Quality_assessment
-        
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
-        
-* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
-
-        cd /fastdata/$USER/align/Quality_assessment
-
-        samtools view -b -h 96I.bam "Hmel200115" > 96I_Hmel200115.bam
-        
-* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
-
-        samtools index 96I_Hmel200115.bam
-
-* The copy the BAM file, index and reference genome to your desktop.
-        
-        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam
-        
-        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai
-        
-        /fastdata/$USER/align/ref/Hmel2.fa
-
-* Load the reference genome into IGV
+Load the reference genome into IGV
 
         Genomes/Load Genome from File
 
-* Load the BAM file into IGV
+Load the BAM file into IGV
 
         File/Load from File
+
+## c. PRACTICAL ACTIVITY
+
+Lets view some of our read alignments to the reference genome with IGV. We have already loaded IGV, and taken a [screenshot] (https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg).
 
 * Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
         
@@ -235,10 +217,8 @@ Lets view some of our read alignments to the reference genome with IGV. We can d
         Hmel200115	exon	1	415
         Hmel200115	exon	496	1280
         Hmel200115	exon	1564	1683
-        
-        Type Hmel200115 into the IGV search bar
 
-Using the coordinates above, locate the exons in the IGV viewer. Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
+Using the coordinates above, locate the exons in the screenshot. Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
         
 ---
 
