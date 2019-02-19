@@ -218,7 +218,7 @@ Lets view some of our read alignments to the reference genome with IGV. We have 
         Hmel200115	exon	496	1280
         Hmel200115	exon	1564	1683
 
-Using the coordinates above, locate the exons in the screenshot. Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
+* Using the coordinates above, locate the exons in the [screenshot](https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg). Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
         
 ---
 
