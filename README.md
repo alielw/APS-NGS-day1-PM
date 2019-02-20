@@ -35,6 +35,10 @@ It should show something like:
         pwd
         /fastdata/$USER/align
 
+The data we will be using today is the folder below. You need to be in interactive mode `qrsh` to access this data.
+
+	/usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data
+
 ---
 
 ## Programmes
