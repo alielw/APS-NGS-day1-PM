@@ -188,7 +188,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * **Interactive Genome Viewer**
 
-We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. 
+
+You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
         samtools index sample.bam
 
@@ -204,15 +206,15 @@ Load the BAM file into IGV
 
 ## c. PRACTICAL ACTIVITY
 
-We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop.
 
-* First, copy the BAM file to your fastdata.
+* First, lets make a new folder and copy the BAM file there.
 	
 	        mkdir /fastdata/$USER/align/Quality_assessment
 	
 	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
 
-* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* Extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 	
 	        cd /fastdata/$USER/align/Quality_assessment
 	
@@ -222,7 +224,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        samtools index 96I_Hmel200115.bam
 	
-* The copy the BAM file, index and reference genome to your desktop.
+* copy the BAM file, index and reference genome to your desktop.
 	
 	        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam
 	
@@ -234,7 +236,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 * Unzip downloaded file. 
 
-* Click on Windows icon on left right of screen. Type `cmd` into the search code. Click on `x86 Nature Tools Command Prompt for VS`. A terminal will open.
+* Click on the Windows icon on left right of screen. Type `cmd` into the search code. Click on `x86 Nature Tools Command Prompt for VS`. A terminal will open.
 
 * Drag and drop the unzipped file called igv in the IGV folder onto the terminal window. Press enter. There may be an error message asking for permissions. Just click cancel if this happens. IGV should now load.
 	
@@ -247,14 +249,20 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	        File/Load from File
 
 * Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
-        
-        scaffold        feature start   stop
-        Hmel200115	gene	1	1683	
-        Hmel200115	exon	1	415
-        Hmel200115	exon	496	1280
-        Hmel200115	exon	1564	1683
 
-* Using the coordinates above, locate the exons in the [screenshot](https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg). Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
+		grep "Hmel20011" /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.gff
+        
+        	scaffold        feature start   stop
+        	Hmel200115	gene	1	1683	
+        	Hmel200115	exon	1	415
+        	Hmel200115	exon	496	1280
+        	Hmel200115	exon	1564	1683
+
+* Using the coordinates above, locate the scaffold & exons in the IGV viewer. 
+
+		Search Hmel200115 in the search box in IGV viewer. You can also use the scaffold dropdown.
+
+* Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
         
 ---
 
