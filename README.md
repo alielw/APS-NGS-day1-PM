@@ -204,7 +204,47 @@ Load the BAM file into IGV
 
 ## c. PRACTICAL ACTIVITY
 
-Lets view some of our read alignments to the reference genome with IGV. We have already loaded IGV, and taken a [screenshot](https://github.com/alielw/APS-NGS-day2-AM/blob/master/IGV%20viewer.jpg).
+We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+
+* First, copy the BAM file to your fastdata.
+	
+	        mkdir /fastdata/$USER/align/Quality_assessment
+	
+	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
+
+* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+	
+	        cd /fastdata/$USER/align/Quality_assessment
+	
+	        samtools view -b -h 96I.bam "Hmel200115" > 96I_Hmel200115.bam
+
+* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+	
+	        samtools index 96I_Hmel200115.bam
+	
+* The copy the BAM file, index and reference genome to your desktop.
+	
+	        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam
+	
+	        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai
+	
+	        /fastdata/$USER/align/ref/Hmel2.fa
+                
+* Download [IGV](http://software.broadinstitute.org/software/igv/download) on Windows to your Desktop.
+
+* Unzip downloaded file. 
+
+* Click on Windows icon on left right of screen. Type `cmd` into the search code. Click on `x86 Nature Tools Command Prompt for VS`. A terminal will open.
+
+* Drag and drop the unzipped file called igv in the IGV folder onto the terminal window. Press enter. There may be an error message asking for permissions. Just click cancel if this happens. IGV should now load.
+	
+* Load the reference genome into IGV
+	
+	        Genomes/Load Genome from File
+	
+* Load the BAM file into IGV
+
+	        File/Load from File
 
 * Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
         
