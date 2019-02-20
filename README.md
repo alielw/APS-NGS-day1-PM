@@ -130,10 +130,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
         
-* Make an executable script where you can specify the job requirements. I use `emacs` to edit files, but you can use `nano` if you prefer.
+* Make an executable script where you can specify the job requirements. 
         
         cd /fastdata/$USER/align/Tophat/60A
-        emacs Tophat_60A.sh
+        nano Tophat_60A.sh
         
 * Tophat2 normally requires around 10Gb of memory and across 1 thread will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2. You need to replace `$USER` with your username.
 
@@ -167,7 +167,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         cd /fastdata/$USER/align/Tophat/60A_nomixed
         
-        emacs Tophat_60A_nomixed.sh
+        nano Tophat_60A_nomixed.sh
         
         #!/bin/bash
         #$ -l h_rt=10:00:00
