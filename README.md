@@ -217,14 +217,18 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	        mkdir /fastdata/$USER/align/Quality_assessment
 	
 	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
+		
+* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
-* Extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
-	
-	        cd /fastdata/$USER/align/Quality_assessment
+		cd /fastdata/$USER/align/Quality_assessment
+		
+		samtools index 96I.bam
+
+* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 	
 	        samtools view -b -h 96I.bam "Hmel200115" > 96I_Hmel200115.bam
 
-* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* You need to index the new BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 	
 	        samtools index 96I_Hmel200115.bam
 	
