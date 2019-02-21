@@ -410,7 +410,7 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
 * Merge gtf files with cuffmerge. Cuffmerge produces a GTF file, merged.gtf that merges together the input assemblies.
 
-        cuffmerge -g Hmel2.gff -s/fastdata/$USER/align/ref/Hmel2.fa gtf_list.txt 
+        cuffmerge -g Hmel2.gff -s /fastdata/$USER/align/ref/Hmel2.fa gtf_list.txt 
 
 * Count how many transcripts there are. This should be equal to the number of lines minus the four summary lines at the end of the file. You can count line numbers with Unix (`wc -l`).
         
