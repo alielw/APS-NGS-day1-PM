@@ -152,10 +152,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         -o /fastdata/$USER/align/Tophat/60A\
         /fastdata/$USER/align/ref/Hmel2\
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
-
-* Finally, close and save the file
-
-        Ctrl+X Ctrl+C
         
 * Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
         
