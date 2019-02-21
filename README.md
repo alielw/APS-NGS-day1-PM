@@ -147,10 +147,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
 * Next, add the following commands to map reads to the reference without specifying no-mixed.
 
-        tophat2 -p 1\
-        --library-type fr-firststrand\
-        -o /fastdata/$USER/align/Tophat/60A\
-        /fastdata/$USER/align/ref/Hmel2\
+        tophat2 -p 1 \
+        --library-type fr-firststrand \
+        -o /fastdata/$USER/align/Tophat/60A \
+        /fastdata/$USER/align/ref/Hmel2 \
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
         
 * Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
@@ -173,11 +173,11 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         source /usr/local/extras/Genomics/.bashrc
         
-        tophat2 -p 1\
-        --library-type fr-firststrand\
-        --no-mixed\
-        -o /fastdata/$USER/align/Tophat/60A_nomixed\
-        /fastdata/$USER/align/ref/Hmel2\
+        tophat2 -p 1 \
+        --library-type fr-firststrand \
+        --no-mixed \
+        -o /fastdata/$USER/align/Tophat/60A_nomixed \
+        /fastdata/$USER/align/ref/Hmel2 \
         /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
         
         qsub Tophat_60A_nomixed.sh
