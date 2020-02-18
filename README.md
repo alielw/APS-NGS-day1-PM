@@ -2,7 +2,7 @@
 *Department of Animal and Plant Sciences, University of Sheffield*
 
 # Aligning Illumina RNA-seq data
-#### Alison Wright, Nicola Nadeau, Victor Soria-Carrasco
+#### Alison Wright, Nicola Nadeau, Helen Hipperson
 
 The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome and assemble transcripts. We will be using a dataset of expression data of multiple individuals of *Heliconius melpomene*.
 
@@ -37,7 +37,7 @@ It should show something like:
 
 The data we will be using today is the folder below. You need to be in interactive mode `qrsh` to access this data.
 
-	/usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data
+	/usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data
 
 ---
 
@@ -74,7 +74,7 @@ Make an index of the reference genome.
 
 * Copy the reference genome to this folder
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.fa /fastdata/$USER/align/ref
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/align/ref
         
 * Index the genome
 
@@ -127,8 +127,8 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
  
 * Copy the two fastq files into your output folder. You must be in interactive mode to do this.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
         
 * Make an executable script where you can specify the job requirements. 
         
@@ -212,7 +212,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        mkdir /fastdata/$USER/align/Quality_assessment
 	
-	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
+	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
 		
 * You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
@@ -254,7 +254,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 * Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
 
-		grep "Hmel20011" /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.gff
+		grep "Hmel20011" /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff
         
         	scaffold        feature start   stop
         	Hmel200115	gene	1	1683	
@@ -299,7 +299,7 @@ Information about read mapping is specified in the BAM file. BAM and SAM formats
 
 For example, you might want to identify reads with high quality alignments. This may be because you want to extract a set of reads for downstream analyses. This information is encoded in the BAM/SAM file as [flags](https://samtools.github.io/hts-specs/SAMv1.pdf). The following table gives an overview of the mandatory fields in the SAM format:
 
-![alt text](https://github.com/alielw/APS-NGS-day2-AM/blob/master/SAM%20fields.jpg)
+![alt text](https://github.com/alielw/APS-NGS-day1-PM/blob/master/SAM%20fields.jpg)
 
 The fields that will be most useful are the FLAGS and MAPQ. The Broad Institute have a useful website to understand the [FLAGS](https://broadinstitute.github.io/picard/explain-flags.html). In addition, the MAPQ field indicates the mapping quality of the read.
 
@@ -372,7 +372,7 @@ As with Tophat, there are many different mapping parameters you can specify, see
 Cufflinks produces four output files: transcripts.gtf, isoforms.fpkm_tracking, genes.fpkm_tracking, skipped.gtf
 
 **transcripts.gtf**
-This GTF file contains Cufflinks’ assembled isoforms. The first 7 columns are standard GTF, and the last column contains attributes, some of which are also standardized (“gene_id”, and “transcript_id”). There one GTF record per row, and each record represents either a transcript or an exon within a transcript. Further description of the format can be found [here](https://github.com/alielw/APS-NGS-day2-AM/blob/master/GTF%20format.jpg)
+This GTF file contains Cufflinks’ assembled isoforms. The first 7 columns are standard GTF, and the last column contains attributes, some of which are also standardized (“gene_id”, and “transcript_id”). There one GTF record per row, and each record represents either a transcript or an exon within a transcript. Further description of the format can be found [here](https://github.com/alielw/APS-NGS-day1-PM/blob/master/GTF%20format.jpg)
 
 * **Generate list of gtf files**
 
@@ -392,11 +392,11 @@ Cufflinks takes a couple of hours to run, so we have already generated gtf files
 
 * First, copy the folder containing the gtf files to your fastdata folder
 
-        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Cufflinks_output /fastdata/$USER/align/
+        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Cufflinks_output /fastdata/$USER/align/
 
 * Copy the reference gff to the new folder. This contains all the annotated transcripts in the genome.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2019/NGS_data/Reference/Hmel2.gff /fastdata/$USER/align/Cufflinks_output
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/align/Cufflinks_output
 
 * View list of gtf files
 
