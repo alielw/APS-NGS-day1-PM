@@ -27,14 +27,14 @@ First of all, this tutorial must be run using an interactive session in ShARC. Y
 For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory. Remember you need to replace $USER with your username.
 
         cd /fastdata/$USER
-        mkdir align
-        cd align
+        mkdir 1.align
+        cd 1.align
 
 Remember you can check your current working directory anytime with the command `pwd`.
 It should show something like:
 
         pwd
-        /fastdata/$USER/align
+        /fastdata/$USER/1.align
 
 The data we will be using today is the folder below. You need to be in interactive mode `qrsh` to access this data.
 
@@ -70,12 +70,12 @@ Make an index of the reference genome.
 
 * Make a new folder in your align folder in fastdata. Remember to change $USER to your username.
 
-        mkdir /fastdata/$USER/align/ref
-        cd /fastdata/$USER/align/ref
+        mkdir /fastdata/$USER/1.align/ref
+        cd /fastdata/$USER/1.align/ref
 
 * Copy the reference genome to this new folder
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/align/ref
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
         
 * Index the genome
 
@@ -121,18 +121,18 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * First, make some output folders.
 
-        mkdir /fastdata/$USER/align/Trimmed_data
-        mkdir /fastdata/$USER/align/HISAT2
-        mkdir /fastdata/$USER/align/HISAT2/60A
+        mkdir /fastdata/$USER/1.align/Trimmed_data
+        mkdir /fastdata/$USER/1.align/HISAT2
+        mkdir /fastdata/$USER/1.align/HISAT2/60A
  
 * Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode to do this.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_1.fq.gz /fastdata/$USER/align/Trimmed_data
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_2.fq.gz /fastdata/$USER/align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_1.fq.gz /fastdata/$USER/1.align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_2.fq.gz /fastdata/$USER/1.align/Trimmed_data
 
 * Make an executable script where you can specify the job requirements. 
         
-        cd /fastdata/$USER/align/HISAT2/60A
+        cd /fastdata/$USER/1.align/HISAT2/60A
         nano HISAT2_60A.sh
         
 * Specify the requirements for ShARC and give the path to the Genomics Software Repository.
@@ -141,21 +141,21 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l h_rt=00:15:00
         #$ -l rmem=5G
         #$ -pe smp 3
-        #$ -wd /fastdata/$USER/align/HISAT2/60A
+        #$ -wd /fastdata/$USER/1.align/HISAT2/60A
         
         source /usr/local/extras/Genomics/.bashrc
 
 * Next, add the following commands to map reads to the reference genome.
 
         hisat2 \
-		/fastdata/$USER/align/ref/Hmel2 \
-		-1 /fastdata/$USER/align/Trimmed_data/60A_1.fq.gz \
-		-2 /fastdata/$USER/align/Trimmed_data/60A_2.fq.gz \
+		/fastdata/$USER/1.align/ref/Hmel2 \
+		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
+		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
 		-p 3 \
 		-q \
 		--dta \
-		-S /fastdata/$USER/align/HISAT2/60A/60A.sam \
-		--met-file /fastdata/$USER/align/HISAT2/60A/60A.stats
+		-S /fastdata/$USER/1.align/HISAT2/60A/60A.sam \
+		--met-file /fastdata/$USER/1.align/HISAT2/60A/60A.stats
         
 * Finally, submit your job. Only submit this if `hisat2-build` has finished and you have an indexed reference genome. This should take around 10 minutes to run so move onto the next step.
         
@@ -163,9 +163,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
 * Next, repeat this process to run HISAT2 again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
 
-        mkdir /fastdata/$USER/align/HISAT2/60A_nomixed
+        mkdir /fastdata/$USER/1.align/HISAT2/60A_nomixed
         
-        cd /fastdata/$USER/align/HISAT2/60A_nomixed
+        cd /fastdata/$USER/1.align/HISAT2/60A_nomixed
         
         nano HISAT2_60A_nomixed.sh
         
@@ -173,20 +173,20 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l h_rt=00:15:00
         #$ -l rmem=5G
         #$ -pe smp 3
-        #$ -wd /fastdata/$USER/align/HISAT2/60A_nomixed
+        #$ -wd /fastdata/$USER/1.align/HISAT2/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
         
         hisat2 \
-		/fastdata/$USER/align/ref/Hmel2 \
-		-1 /fastdata/$USER/align/Trimmed_data/60A_1.fq.gz \
-		-2 /fastdata/$USER/align/Trimmed_data/60A_2.fq.gz \
+		/fastdata/$USER/1.align/ref/Hmel2 \
+		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
+		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
 		-p 3 \
 		-q \
 		--dta \
 		--no-mixed \
-		-S /fastdata/$USER/align/HISAT2/60A/60A.nomixed.sam \
-		--met-file /fastdata/$USER/align/HISAT2/60A/60A.nomixed.stats
+		-S /fastdata/$USER/1.align/HISAT2/60A/60A.nomixed.sam \
+		--met-file /fastdata/$USER/1.align/HISAT2/60A/60A.nomixed.stats
 
 * Run the script. This will take ~10 minutes to run so move onto the next step.
         
@@ -382,12 +382,12 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 
 * First, make a new folder. Copy over the gff files into this folder.
 
-		mkdir mkdir /fastdata/$USER/expression
-        	cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/expression/60A
+		mkdir /fastdata/$USER/2.assemble_transcripts
+        	cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
 
 * Make an executable script where you can specify the job requirements. 
         
-        cd /fastdata/$USER/expression/60A
+        cd /fastdata/$USER/2.assemble_transcripts/60A
         nano StringTie_60A.sh
         
 * Specify the requirements for ShARC and give the path to the Genomics Software Repository.
@@ -396,18 +396,18 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         #$ -l h_rt=00:15:00
         #$ -l rmem=5G
         #$ -pe smp 3
-        #$ -wd /fastdata/$USER/expression/60A
+        #$ -wd /fastdata/$USER/2.assemble_transcripts/60A
         
         source /usr/local/extras/Genomics/.bashrc
 
 * Next, add the following commands to assemble transcripts.
 
         stringtie \
-		/fastdata/$USER/align/HISAT2/60A/60A.sorted.bam \
-		-G /fastdata/$USER/expression/60A/Hmel2.gff \
+		/fastdata/$USER/1.align/HISAT2/60A/60A.sorted.bam \
+		-G /fastdata/$USER/2.assemble_transcripts/60A/Hmel2.gff \
 		-p 3 \
-		-A /fastdata/$USER/expression/60A/60A.gene_abund \
-		-o /fastdata/$USER/expression/60A/60A.gtf
+		-A /fastdata/$USER/2.assemble_transcripts/60A/60A.gene_abund \
+		-o /fastdata/$USER/2.assemble_transcripts/60A/60A.gtf
 		
 * Finally, submit your job. 
         
