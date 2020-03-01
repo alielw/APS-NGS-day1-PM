@@ -288,10 +288,6 @@ Whilst IGV allows us to examine specific regions of the genome, it not easy to s
 
 HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
 
-## d. PRACTICAL ACTIVITY 
-
-Open the `.e` output file for your first HISAT2 run and the `.e` output file from HISAT2 with `no-mixed`. How are they different? What are the consequence of specifying `no-mixed` for read mapping?
-
 * **BAM format**
 
 Information about read mapping is specified in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well.
@@ -325,6 +321,10 @@ Eg:
         1641383 + 0 singletons (10.70% : N/A)
         70752 + 0 with mate mapped to a different chr
         39370 + 0 with mate mapped to a different chr (mapQ>=5)
+
+## d. PRACTICAL ACTIVITY 
+
+Open the `.e` output file for your first HISAT2 run and the `.e` output file from HISAT2 with `no-mixed`. How are they different? What are the consequence of specifying `no-mixed` for read mapping?
 
 ## e. PRACTICAL ACTIVITY
 
