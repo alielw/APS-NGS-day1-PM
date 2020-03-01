@@ -115,7 +115,7 @@ HISAT2 outputs a SAM file with the alignment information for each read.
 
 ## b. PRACTICAL ACTIVITY
 
-Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `**no-mixed**`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two Tophat runs, one with `no-mixed` and one without.
+Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `no-mixed`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two Tophat runs, one with `no-mixed` and one without.
 
 You should submit these commands as jobs to ShARC. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
