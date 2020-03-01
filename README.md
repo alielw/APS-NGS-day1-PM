@@ -24,7 +24,7 @@ The aim of this practical is to learn how to align Illumina RNA-seq data to a re
 ## Initial set up
 First of all, this tutorial must be run using an interactive session in ShARC. You will also submit jobs to ShARC. For that, you should log in into ShARC with `ssh`, and then request an interactive session with `qrsh`. Your shell prompt should show `sharc-nodeXXX` (XXX being a number between 001 and 172) and not `@sharc-login1` nor `@sharc-login2`.
 
-For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory:
+For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory. Remember you need to replace $USER with your username.
 
         cd /fastdata/$USER
         mkdir align
@@ -46,19 +46,19 @@ The data we will be using today is the folder below. You need to be in interacti
 
 There are a number of different programs that can be used to align RNA-seq reads to a reference genome. There are two types of aligners: Splice-unaware and Splice-aware. Splice-unaware aligners are not aware of exon/intron junctions and are therefore only appropriate for mapping to a transcriptome. Splice-aware aligners map reads over exon/intro junctions and are appropriate for aligning reads to a genome reference. This is an important point to consider when choosing an aligner and why it is necessary to use different programs for RNA- versus DNA-seq data.
 
-Potential aligners include [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), [STAR](https://github.com/alexdobin/STAR) and [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml). We will be using Tophat2 in this practical as it is a standard, widely used approach for Illumina data. However, HISAT2 is the next generation of spliced aligner from the same research group that developed TopHat and has considerable advantages in terms of speed and memory requirements. When choosing an aligner appropriate to your study, it is useful to refer to the numerous studies that compare performance statistics across programs (eg [PeerJ review](https://peerj.com/preprints/27283/), [PLoS One review](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0190152)). The blog [RNA-Seq Blog](https://www.rna-seqblog.com/review-of-rna-seq-data-analysis-tools/) is a valuable resource.  
+Potential aligners include [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), [STAR](https://github.com/alexdobin/STAR) and [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml). We will be using HISAT2. This is the next generation of spliced aligner from the same research group that developed TopHat and has considerable advantages in terms of speed and memory requirements. When choosing an aligner appropriate to your study, it is useful to refer to the numerous studies that compare performance statistics across programs (eg [PeerJ review](https://peerj.com/preprints/27283/), [PLoS One review](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0190152)). The blog [RNA-Seq Blog](https://www.rna-seqblog.com/review-of-rna-seq-data-analysis-tools/) is a valuable resource.  
 
 ---
 
 ## 1. Prepare reference genome
 
-Prepare the reference genome before mapping RNA-seq reads with [Bowtie2](http://bowtie-bio.sourceforge.net/tutorial.shtml)
+Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml)
 
-* **Tophat2 index**
+* **HISAT2 index**
 
-        >bowtie2-build reference_genome.fa reference_genome_db
+        >hisat2-build -f reference_genome.fa reference_genome_db
 
-This command indexes the reference genome fasta file and outputs six files: .1.bt2  .2.bt2  .3.bt2  .4.bt2  .rev.1.bt2  .rev.2.bt2. These files constitute the index.
+This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.
 
 ## a. PRACTICAL ACTIVITY
 
@@ -68,54 +68,54 @@ Make an index of the reference genome.
 
         qrsh
 
-* Make a new folder in your align folder in fastdata
+* Make a new folder in your align folder in fastdata. Remember to change $USER to your username.
 
         mkdir /fastdata/$USER/align/ref
         cd /fastdata/$USER/align/ref
 
-* Copy the reference genome to this folder
+* Copy the reference genome to this new folder
 
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/align/ref
         
 * Index the genome
 
-        bowtie2-build Hmel2.fa Hmel2
+        hisat2-build -f Hmel2.fa Hmel2
 
-This commands takes around five minutes to finish. While this is running, move onto section two to familiarise yourself with Tophat and prepare your command to map reads to the reference genome. When `bowtie2-build` has finished you can then run Tophat.
+This commands takes around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
    
 ## 2. Align RNA-seq reads to reference
 
-Map RNA-seq reads to a reference genome using [Tophat2](https://ccb.jhu.edu/software/tophat/index.shtml).
+Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml).
  
- * **Map reads to genome with Tophat2**
+ * **Map reads to genome with HISAT2**
  
-        >tophat2 reference_genome_db sample1_1.fq sample1_2.fq
-    
-There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/tophat/manual.shtml). While it is often suffient to run Tophat2 with default settings, there are a number of parameters that should be considered:
-    
-**--mate-inner-dist** This is the expected (mean) inner distance between mate pairs. For, example, for paired end runs with fragments selected at 300bp, where each end is 50bp, you should set -r to be 200. The default is 50bp. You can obtain this information from the sequencing centre.
-    
-**--solexa-quals or --solexa1.3-quals** You need to specify the quality score system of your data. --solex-quals tells Tophat to use the Solexa scale for quality values in FASTQ files. --solexa1.3-quals specifies that quality scores are encoded in Phred-scaled base-64. Use this option for FASTQ files from pipeline 1.3 or later.
+        >hisat2 reference_genome forward.fastq reverse.fastq
+		
+There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/hisat2/manual.shtml). While it is often suffient to run HISAT2 with default settings, there are a number of parameters that should be considered:
 
-**--num-threads** Use this many threads to align reads. The default is 1.
+**-q** Reads are FASTQ files. FASTQ files usually have extension .fq or .fastq. FASTQ is the default format.
 
-**--library-type** The default is unstranded (fr-unstranded). Can specify fr-firststrand or fr-secondstrand.
+**--dta/--downstream-transcriptome-assembly** Report alignments tailored for transcript assemblers including StringTie. With this option, HISAT2 requires longer anchor lengths for de novo discovery of splice sites. This leads to fewer alignments with short-anchors, which helps transcript assemblers improve significantly in computationa and memory usage. You must specify this option when running StringTie after HISAT2 to quantify gene expression.
 
-**--GTF** Supply TopHat with a set of gene model annotations and/or known transcripts, as a GTF 2.2 or GFF3 formatted file. If this option is provided, TopHat will first extract the transcript sequences and use Bowtie to align reads to this virtual transcriptome first. Only the reads that do not fully map to the transcriptome will then be mapped on the genome. The reads that did map on the transcriptome will be converted to genomic mappings (spliced as needed) and merged with the novel mappings and junctions in the final tophat output.
+**-S path** File to write SAM alignments to. By default, alignments are written to the "standard out" or "stdout" filehandle (i.e. the console).
 
 **-p**  Use this many threads to align reads. The default is 1.
+
+**--phred33** Input qualities are ASCII chars equal to the Phred quality plus 33. This is also called the "Phred+33" encoding, which is used by the very latest Illumina pipelines.
+
+**--met-file path** Write hisat2 metrics to file <path>. Having alignment metric can be useful for debugging certain problems, especially performance issues. See also: --met. Default: metrics disabled.
 
 The following two parameters should be specified if it is necessary to obtain very accurate and specific mapping data. A pair of reads that align with the expected relative mate orientation and range of distances between mates is said to align “concordantly”. If both mates have unique alignments, but the alignments do not match paired-end expectations (i.e. the mates aren’t in the expected relative orientation, or aren’t within the expected distance range, or both), the pair is said to align “discordantly”. Discordant alignments may be of particular interest, for instance, when seeking structural variants.
 
 **--no-discordant** For paired reads, report only concordant mappings.
 
-**--no-mixed** For paired reads, only report read alignments if both reads in a pair can be mapped (by default, if TopHat cannot find a concordant or discordant alignment for both reads in a pair, it will find and report alignments for each read separately; this option disables that behavior).
+**--no-mixed** For paired reads, only report read alignments if both reads in a pair can be mapped. By default, when hisat2 cannot find a concordant or discordant alignment for a pair, it then tries to find alignments for the individual mates. This option disables that behavior.
 
-Tophat outputs a BAM file with the alignment information for each read (accepted_hits.bam).
+HISAT2 outputs a SAM file with the alignment information for each read.
 
 ## b. PRACTICAL ACTIVITY
 
-Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `**no-mixed**`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You will compare mapping statistics between two Tophat runs, one with `no-mixed` and one without. This activity will comprise part of the course assessment.
+Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `**no-mixed**`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two Tophat runs, one with `no-mixed` and one without.
 
 You should submit these commands as jobs to ShARC. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
@@ -123,65 +123,75 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
         mkdir /fastdata/$USER/align/Trimmed_data
         
-        mkdir /fastdata/$USER/align/Tophat
-        mkdir /fastdata/$USER/align/Tophat/60A
+        mkdir /fastdata/$USER/align/HISAT2
+        mkdir /fastdata/$USER/align/HISAT2/60A
  
-* Copy the two fastq files into your output folder. You must be in interactive mode to do this.
+* Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode to do this.
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A.trimA_2.fastq.gz /fastdata/$USER/align/Trimmed_data
-        
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_1.fq.gz /fastdata/$USER/align/Trimmed_data
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_2.fq.gz /fastdata/$USER/align/Trimmed_data
+
 * Make an executable script where you can specify the job requirements. 
         
-        cd /fastdata/$USER/align/Tophat/60A
-        nano Tophat_60A.sh
+        cd /fastdata/$USER/align/HISAT2/60A
+        nano HISAT2_60A.sh
         
-* Tophat2 normally requires around 10Gb of memory and across 1 thread will take around 10 hours to finish. Specify this information in the executable script. You can use the UNIX command `pwd` to get the full path of a folder. Remember to specify the .bashrc file which includes the path to Tophat2. You need to replace `$USER` with your username.
+* Specify the requirements for the hpc and give the path to the Genomics Software Repository.
 
         #!/bin/bash
-        #$ -l h_rt=10:00:00
-        #$ -l rmem=10G
-        #$ -pe smp 1
-        #$ -wd /fastdata/$USER/align/Tophat/60A
+        #$ -l h_rt=00:15:00
+        #$ -l rmem=5G
+        #$ -pe smp 3
+        #$ -wd /fastdata/$USER/align/HISAT2/60A
+        
+        source /usr/local/extras/Genomics/.bashrc
+
+* Next, add the following commands to map reads to the reference genome.
+
+        hisat2 \
+		/fastdata/$USER/align/ref/Hmel2 \
+		-1 /fastdata/$USER/align/Trimmed_data/60A_1.fq.gz \
+		-2 /fastdata/$USER/align/Trimmed_data/60A_2.fq.gz \
+		-p 3 \
+		-q \
+		--dta \
+		-S /fastdata/$USER/align/HISAT2/60A/60A.sam \
+		--met-file /fastdata/$USER/align/HISAT2/60A/60A.stats
+        
+* Finally, submit your job. Only submit this if `hisat2-build` has finished and you have an indexed reference genome. This should take around 10 minutes to run so move onto the next step.
+        
+        qsub HISAT2_60A.sh
+        
+* Next, repeat this process to run HISAT2 again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
+
+        mkdir /fastdata/$USER/align/HISAT2/60A_nomixed
+        
+        cd /fastdata/$USER/align/HISAT2/60A_nomixed
+        
+        nano HISAT2_60A_nomixed.sh
+        
+        #!/bin/bash
+        #$ -l h_rt=00:15:00
+        #$ -l rmem=5G
+        #$ -pe smp 3
+        #$ -wd /fastdata/$USER/align/HISAT2/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
         
-* Next, add the following commands to map reads to the reference without specifying no-mixed.
+        hisat2 \
+		/fastdata/$USER/align/ref/Hmel2 \
+		-1 /fastdata/$USER/align/Trimmed_data/60A_1.fq.gz \
+		-2 /fastdata/$USER/align/Trimmed_data/60A_2.fq.gz \
+		-p 3 \
+		-q \
+		--dta \
+		--no-mixed \
+		-S /fastdata/$USER/align/HISAT2/60A/60A.nomixed.sam \
+		--met-file /fastdata/$USER/align/HISAT2/60A/60A.nomixed.stats
 
-        tophat2 -p 1 \
-        --library-type fr-firststrand \
-        -o /fastdata/$USER/align/Tophat/60A \
-        /fastdata/$USER/align/ref/Hmel2 \
-        /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
+* Run the script. This will take ~10 minutes to run so move onto the next step.
         
-* Finally, submit your job. Only submit this if `bowtie2-build` has finished and you have an indexed reference genome.
-        
-        qsub Tophat_60A.sh
-        
-* Next, repeat this process to run Tophat again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
-
-        mkdir /fastdata/$USER/align/Tophat/60A_nomixed
-        
-        cd /fastdata/$USER/align/Tophat/60A_nomixed
-        
-        nano Tophat_60A_nomixed.sh
-        
-        #!/bin/bash
-        #$ -l h_rt=10:00:00
-        #$ -l rmem=10G
-        #$ -pe smp 1
-        #$ -wd /fastdata/$USER/align/Tophat/60A_nomixed
-        
-        source /usr/local/extras/Genomics/.bashrc
-        
-        tophat2 -p 1 \
-        --library-type fr-firststrand \
-        --no-mixed \
-        -o /fastdata/$USER/align/Tophat/60A_nomixed \
-        /fastdata/$USER/align/ref/Hmel2 \
-        /fastdata/$USER/align/Trimmed_data/60A.trimA_1.fastq.gz /fastdata/$USER/align/Trimmed_data/60A.trimA_2.fastq.gz 
-        
-        qsub Tophat_60A_nomixed.sh
+       qsub HISAT2_60A_nomixed.sh
         
 ---
 
@@ -191,43 +201,43 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. 
 
-You need to first index the BAM with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+You need to first sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
 
-        samtools index sample.bam
+        samtools view -b sample.sam | samtools sort > sample.sorted.bam
 
-Then you have to transfer the BAM file, index and reference genome to the Desktop.
+You need to then index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+
+	samtools index sample.sorted.bam
+
+Then you have to transfer the SAM file, index and reference genome to the Desktop.
 
 Load the reference genome into IGV
 
         Genomes/Load Genome from File
 
-Load the BAM file into IGV
+Load the SAM file into IGV
 
         File/Load from File
 
 ## c. PRACTICAL ACTIVITY
 
 We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop.
-
-* First, lets make a new folder and copy the BAM file there.
 	
-	        mkdir /fastdata/$USER/align/Quality_assessment
-	
-	        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Tophat_output/96I.bam /fastdata/$USER/align/Quality_assessment
-		
-* You need to index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* You need to sort the SAM file you generated (60A.sam) with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
-		cd /fastdata/$USER/align/Quality_assessment
-		
-		samtools index 96I.bam
+		samtools view -b 60A.sam | samtools sort > 60A.sorted.bam
+
+* You need to index the new BAM file.
+
+		samtools index 60A.sorted.bam
 
 * Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 	
-	        samtools view -b -h 96I.bam "Hmel200115" > 96I_Hmel200115.bam
+	        samtools view -b -h 60A.sorted.bam "Hmel200115" > 60A_Hmel200115.bam
 
 * You need to index the new BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 	
-	        samtools index 96I_Hmel200115.bam
+	        samtools index 60A_Hmel200115.bam
 	
 * copy the BAM file, index and reference genome to your desktop.
 	
