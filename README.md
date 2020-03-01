@@ -122,7 +122,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * First, make some output folders.
 
         mkdir /fastdata/$USER/align/Trimmed_data
-        
         mkdir /fastdata/$USER/align/HISAT2
         mkdir /fastdata/$USER/align/HISAT2/60A
  
@@ -136,7 +135,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cd /fastdata/$USER/align/HISAT2/60A
         nano HISAT2_60A.sh
         
-* Specify the requirements for the hpc and give the path to the Genomics Software Repository.
+* Specify the requirements for ShARC and give the path to the Genomics Software Repository.
 
         #!/bin/bash
         #$ -l h_rt=00:15:00
@@ -391,7 +390,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         cd /fastdata/$USER/expression/60A
         nano StringTie_60A.sh
         
-* Specify the requirements for the hpc and give the path to the Genomics Software Repository.
+* Specify the requirements for ShARC and give the path to the Genomics Software Repository.
 
         #!/bin/bash
         #$ -l h_rt=00:15:00
