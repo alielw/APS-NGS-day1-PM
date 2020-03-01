@@ -404,7 +404,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 * Next, add the following commands to assemble transcripts.
 
         stringtie \
-		/fastdata/$USER/align/HISAT2/60A/60A.sorted.bam
+		/fastdata/$USER/align/HISAT2/60A/60A.sorted.bam \
 		-G /fastdata/$USER/expression/60A/Hmel2.gff \
 		-p 3 \
 		-A /fastdata/$USER/expression/60A/60A.gene_abund \
