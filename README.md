@@ -203,7 +203,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 You need to first sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
 
-        samtools view -b sample.sam | samtools sort > sample.sorted.bam
+        samtools view -Su sample.sam | samtools sort -o sample.sorted.bam
 
 You need to then index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
@@ -225,7 +225,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 * You need to sort the SAM file you generated (60A.sam) with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
 
-		samtools view -b 60A.sam | samtools sort > 60A.sorted.bam
+		samtools view -Su 60A.sam | samtools sort -o 60A.sorted.bam
 
 * You need to index the new BAM file.
 
@@ -241,11 +241,11 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 * copy the BAM file, index and reference genome to your desktop.
 	
-	        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam
+	        60A_Hmel200115.bam
 	
-	        /fastdata/$USER/align/Quality_assessment/96I_Hmel200115.bam.bai
+	        60A_Hmel200115.bam.bai
 	
-	        /fastdata/$USER/align/ref/Hmel2.fa
+	        Hmel2.fa
                 
 * Download [IGV](http://software.broadinstitute.org/software/igv/download) on Windows to your Desktop.
 
@@ -277,7 +277,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 		Search Hmel200115 in the search box in IGV viewer. You can also use the scaffold dropdown.
 
-* Do reads map to these exons? Can you see the intronic regions? Is there any evidence for additional exons that have not been annotated?
+* Do reads map to these exons? Can you see the intronic regions? Is there any evidence for many reads that haven't mapped correctly?
         
 ---
 
@@ -285,24 +285,13 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
 
-* **Tophat Output**
+* **HISAT2 Output**
 
-Tophat produces an output log file (align_summary.txt) with various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. Eg:
+HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
 
-        Left reads:
-                Input     :  18214710
-                Mapped   :   7665434 (42.1% of input)
-                of these:    366828 (4.8%) have multiple alignments (4783 have >20)
-        Right reads:
-                Input     :  18214710
-                Mapped   :   7678151 (42.2% of input)
-                of these:    368728 (4.8%) have multiple alignments (4830 have >20)
-        42.1% overall read mapping rate.
+## d. PRACTICAL ACTIVITY 
 
-        Aligned pairs:   6851101
-        of these:        337896 (4.9%) have multiple alignments
-                         27231 (0.4%) are discordant alignments
-        37.5% concordant pair alignment rate.
+Open the `.e` output file for your first HISAT2 run and the `.e` output file from HISAT2 with `no-mixed`. How are they different? What are the consequence of specifying `no-mixed` for read mapping?
 
 * **BAM format**
 
@@ -338,17 +327,13 @@ Eg:
         70752 + 0 with mate mapped to a different chr
         39370 + 0 with mate mapped to a different chr (mapQ>=5)
 
-## d. PRACTICAL ACTIVITY
+## e. PRACTICAL ACTIVITY
 
-Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this using a bam file we already generated using Tophat (96I.bam). We can do this in interactive mode.
+Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this in interactive mode for the BAM file you already generated (60A.sorted.bam).
 
-* Lets move into the folder you created earlier containing the BAM file. 
-     
-        cd /fastdata/$USER/align/Quality_assessment
+* View the first few lines of the BAM file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
 
-* Then, view the first few lines of the BAM file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
-
-        samtools view 96I.bam | head
+        samtools view 60A.sorted.bam | head
 
 * Next, print the FLAG field for the first few lines using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and Unix `head`. 
 
@@ -367,67 +352,67 @@ Count how many reads have all of the following features; are paired, first in th
 
 ## 5. Assemble transcripts
 
-We can use [Cufflinks](http://cole-trapnell-lab.github.io/cufflinks/) to assemble gene transcripts. Cufflinks is part of the  “classic” RNA-Seq workflow, which includes read mapping with TopHat followed by assembly with Cufflinks. As Tophat is being superceded by [HISAT2](https://ccb.jhu.edu/software/hisat2/index.shtml), Cufflinks is being replaced by [StringTie](https://ccb.jhu.edu/software/stringtie/). Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. Cufflinks will identify potential new transcripts.
+We can use [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual) to assemble gene transcripts. StringTie is part of the  “classic” RNA-Seq workflow, which includes read mapping with HISAT2 followed by assembly with StringTie. It has replaced the Cufflinks program. Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. StringTie will identify potential new transcripts.
 
-* **Generate gtf file for each sample**
-A GTF file contains information about assembled transcripts. We can use cufflinks to generate a set of transcripts for each sample. 
+* The Heliconius GFF file is located here
+/usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff
 
-        >cufflinks sample.bam 
-    
-As with Tophat, there are many different mapping parameters you can specify, see [here](http://cole-trapnell-lab.github.io/cufflinks/cufflinks/index.html). While it is often sufficient to run Cufflinks with default settings, there are a number of parameters that should be considered:
+	eg.
+	Hmel200001	AUGUSTUS	gene	254	1306	.	+	.		ID=HMEL035848g1;Name=g17925;stable_id=HMEL035848g1
+	Hmel200001	AUGUSTUS	mRNA	254	1306	.	+	.	ID=HMEL035848g1.t1;Name=g17925.t1;Parent=HMEL035848g1;stable_id=HMEL035848g1.t1;translation_stable_id=HMEL035848g1.t1
 
-**–GTF-guide** Tells Cufflinks to use the supplied reference annotation a GFF/GTF file to guide RABT assembly. Reference transcripts will be tiled with faux-reads to provide additional information in assembly. Output will include all reference transcripts as well as any novel genes and isoforms that are assembled.
+StringTie takes as input a BAM file sorted by coordinates. A text file in SAM format which was produced by HISAT2 must be sorted and converted to BAM format using the samtools program. We have already done this earlier for the IGV exercise using the command `samtools view -Su sample.sam | samtools sort -o sample.sorted.bam`.
 
-**–library-type** Library type
+As an option, a reference annotation file in GTF/GFF3 format can be provided to StringTie. A GTF file contains information about assembled transcripts. In this case, StringTie will prefer to use these "known" genes from the annotation file, and for the ones that are expressed it will compute coverage, TPM and FPKM values. It will also produce additional transcripts to account for RNA-seq data that aren't covered by (or explained by) the annotation. 
 
-Cufflinks produces four output files: transcripts.gtf, isoforms.fpkm_tracking, genes.fpkm_tracking, skipped.gtf
+* We will assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual). There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual). While it is often suffient to run StringTie with default settings, there are a number of parameters that should be considered:
+ 
+**-G <ref_ann.gff>**	Use the reference annotation file (in GTF or GFF3 format) to guide the assembly process. The output will include expressed reference transcripts as well as any novel transcripts that are assembled. This option is required by options -B, -b, -e, -C (see below).
 
-**transcripts.gtf**
-This GTF file contains Cufflinks’ assembled isoforms. The first 7 columns are standard GTF, and the last column contains attributes, some of which are also standardized (“gene_id”, and “transcript_id”). There one GTF record per row, and each record represents either a transcript or an exon within a transcript. Further description of the format can be found [here](https://github.com/alielw/APS-NGS-day1-PM/blob/master/GTF%20format.jpg)
+**-t**	This parameter disables trimming at the ends of the assembled transcripts. This might be important for some downstream programs. By default StringTie adjusts the predicted transcript's start and/or stop coordinates based on sudden drops in coverage of the assembled transcript.
 
-* **Generate list of gtf files**
+**-e**	Limits the processing of read alignments to only estimate and output the assembled transcripts matching the reference transcripts given with the -G option (requires -G, recommended for -B/-b). You might want to use this option if you only want to quantify expression of annotated genes. With this option, read bundles with no reference transcripts will be entirely skipped, which may provide a considerable speed boost when the given set of reference transcripts is limited to a set of target genes, for example.
 
-Generates a text file with a list (one per line) of GTF files to merge together into a single GTF file.
+**-o path** Sets the name of the output GTF file where StringTie will write the assembled transcripts. This can be specified as a full path, in which case directories will be created as needed. By default StringTie writes the GTF at standard output.
 
-        >ls */transcripts.gtf > gtf_list.txt
+**-A path** Gene abundances will be reported (tab delimited format) in the output file with the given name.
 
-* **Merge gtf files**
+## f. PRACTICAL ACTIVITY
 
-Cufflinks includes a script called [cuffmerge](http://cole-trapnell-lab.github.io/cufflinks/cuffmerge/index.html) that you can use to merge together several Cufflinks assemblies. We must merge transcripts to get a complete reference set of transcripts across all individuals.
+Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual).
 
-        >cuffmerge -g reference.gtf - s gtf_list.txt
+* First, make a new folder. Copy over the gff files into this folder.
 
-## e. PRACTICAL ACTIVITY
+		mkdir mkdir /fastdata/$USER/expression
+        	cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/expression/60A
 
-Cufflinks takes a couple of hours to run, so we have already generated gtf files for each sample. In this practical, we will merge all the gtf files to generate a complete set of transcripts. We will also include the reference gff as Cufflinks will use it to attach gene names and other metadata to the merged catalog.
-
-* First, copy the folder containing the gtf files to your fastdata folder
-
-        cp -r /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Cufflinks_output /fastdata/$USER/align/
-
-* Copy the reference gff to the new folder. This contains all the annotated transcripts in the genome.
-
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/align/Cufflinks_output
-
-* View list of gtf files
-
-        cd /fastdata/$USER/align/Cufflinks_output
-
-        for i in */*transcripts.gtf; do echo $i; done
-
-* Generate list of all gtf files
-
-         for i in */*transcripts.gtf; do echo $i; done > gtf_list.txt
-
-* Merge gtf files with cuffmerge. Cuffmerge produces a GTF file, merged.gtf that merges together the input assemblies.
-
-        cuffmerge -g Hmel2.gff -s /fastdata/$USER/align/ref/Hmel2.fa gtf_list.txt 
-
-* Count how many transcripts there are. This should be equal to the number of lines minus the four summary lines at the end of the file. You can count line numbers with Unix (`wc -l`).
+* Make an executable script where you can specify the job requirements. 
         
-* Correct a bug in cuffmerge. We noitced that there are a few reads that aren't stranded which then generate an error. These need to be removed from the gtf file with the following:
+        cd /fastdata/$USER/expression/60A
+        nano StringTie_60A.sh
+        
+* Specify the requirements for the hpc and give the path to the Genomics Software Repository.
 
-        grep -v -P "\t\.\t\.\t\." merged_asm/merged.gtf > merged_asm/merged_allstranded.gtf
+        #!/bin/bash
+        #$ -l h_rt=00:15:00
+        #$ -l rmem=5G
+        #$ -pe smp 3
+        #$ -wd /fastdata/$USER/expression/60A
+        
+        source /usr/local/extras/Genomics/.bashrc
+
+* Next, add the following commands to assemble transcripts.
+
+        stringtie \
+		/fastdata/$USER/align/HISAT2/60A/60A.sorted.bam
+		-G /fastdata/$USER/expression/60A/Hmel2.gff \
+		-p 3 \
+		-A /fastdata/$USER/expression/60A/60A.gene_abund \
+		-o /fastdata/$USER/expression/60A/60A.gtf
+		
+* Finally, submit your job. 
+        
+        qsub StringTie_60A.sh
 
 ---
 Return to main course page: https://github.com/visoca/AdvDataAna-introNGS
