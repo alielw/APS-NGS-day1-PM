@@ -56,7 +56,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://
 
 * **HISAT2 index**
 
-        >hisat2-build -f reference_genome.fa reference_genome_db
+        hisat2-build -f reference_genome.fa reference_genome_db
 
 This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.
 
@@ -89,7 +89,7 @@ Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/softw
  
  * **Map reads to genome with HISAT2**
  
-        >hisat2 reference_genome forward.fastq reverse.fastq
+        hisat2 reference_genome forward.fastq reverse.fastq
 		
 There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/hisat2/manual.shtml). While it is often suffient to run HISAT2 with default settings, there are a number of parameters that should be considered:
 
@@ -300,11 +300,11 @@ The fields that will be most useful are the FLAGS and MAPQ. The Broad Institute 
 
 You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-        >samtools view file.bam
+        samtools view file.bam
 
 You can also get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-        >samtools flagstat file.bam
+        samtools flagstat file.bam
         
 Eg:
         
