@@ -21,7 +21,7 @@ The aim of this practical is to learn how to align Illumina RNA-seq data to a re
 
 ---
 
-## Initial set up
+## PRACTICAL Initial set up
 First of all, this tutorial must be run using an interactive session in ShARC. You will also submit jobs to ShARC. For that, you should log in into ShARC with `ssh`, and then request an interactive session with `qrsh`. Your shell prompt should show `sharc-nodeXXX` (XXX being a number between 001 and 172) and not `@sharc-login1` nor `@sharc-login2`.
 
 For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory. Remember you need to replace $USER with your username.
@@ -35,10 +35,6 @@ It should show something like:
 
         pwd
         /fastdata/$USER/1.align
-
-The data we will be using today is the folder below. You need to be in interactive mode `qrsh` to access this data.
-
-	/usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data
 
 ---
 
