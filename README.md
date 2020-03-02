@@ -140,7 +140,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #!/bin/bash
         #$ -l h_rt=00:15:00
         #$ -l rmem=5G
-        #$ -pe smp 3
+        #$ -pe smp 2
         #$ -wd /fastdata/$USER/1.align/HISAT2/60A
         
         source /usr/local/extras/Genomics/.bashrc
@@ -151,7 +151,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		/fastdata/$USER/1.align/ref/Hmel2 \
 		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
 		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
-		-p 3 \
+		-p 2 \
 		-q \
 		--dta \
 		-S /fastdata/$USER/1.align/HISAT2/60A/60A.sam \
@@ -172,7 +172,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #!/bin/bash
         #$ -l h_rt=00:15:00
         #$ -l rmem=5G
-        #$ -pe smp 3
+        #$ -pe smp 2
         #$ -wd /fastdata/$USER/1.align/HISAT2/60A_nomixed
         
         source /usr/local/extras/Genomics/.bashrc
@@ -181,7 +181,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		/fastdata/$USER/1.align/ref/Hmel2 \
 		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
 		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
-		-p 3 \
+		-p 2 \
 		-q \
 		--dta \
 		--no-mixed \
