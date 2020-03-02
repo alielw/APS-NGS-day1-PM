@@ -181,8 +181,8 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		-q \
 		--dta \
 		--no-mixed \
-		-S /fastdata/$USER/1.align/HISAT2/60A/60A.nomixed.sam \
-		--met-file /fastdata/$USER/1.align/HISAT2/60A/60A.nomixed.stats
+		-S /fastdata/$USER/1.align/HISAT2/60A_nomixed/60A.nomixed.sam \
+		--met-file /fastdata/$USER/1.align/HISAT2/60A_nomixed/60A.nomixed.stats
 
 * Run the script. This will take ~10 minutes to run so move onto the next step.
         
