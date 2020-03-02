@@ -242,13 +242,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        Hmel2.fa
                 
-* Download [IGV](http://software.broadinstitute.org/software/igv/download) on Windows to your Desktop.
-
-* Unzip downloaded file. 
-
-* Click on the Windows icon on the bottom left of the screen. Type `cmd` into the search code. Click on `x86 Nature Tools Command Prompt for VS`. A terminal will open.
-
-* Drag and drop the unzipped file called igv in the IGV folder onto the terminal window. Press enter. There may be an error message asking for permissions. Just click cancel if this happens. IGV should now load.
+* Find Integrative Genomics Viewer in the Software Centre or download it to your own laptop.
 	
 * Load the reference genome into IGV
 	
