@@ -373,6 +373,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 * First, make a new folder. Copy over the gff files into this folder.
 
 		mkdir /fastdata/$USER/2.assemble_transcripts
+		mkdir /fastdata/$USER/2.assemble_transcripts/60A
         	cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
 
 * Make an executable script where you can specify the job requirements. 
