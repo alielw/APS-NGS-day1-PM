@@ -341,6 +341,10 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 		cd /fastdata/$USER/2.assemble_transcripts/60A
 		head Hmel2.gff
 
+* How many transcripts are there in the gff file? You can count this with Unix (`wc -l`) and minus one for the header.
+
+        wc -l Hmel2.gff
+
 * Make an executable script where you can specify the job requirements for StringTie. 
         
         nano StringTie_60A.sh
