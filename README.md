@@ -361,6 +361,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 		/fastdata/$USER/1.align/HISAT2/60A/60A.sorted.bam \
 		-G /fastdata/$USER/2.assemble_transcripts/60A/Hmel2.gff \
 		-p 3 \
+		-e \
 		-A /fastdata/$USER/2.assemble_transcripts/60A/60A.gene_abund \
 		-o /fastdata/$USER/2.assemble_transcripts/60A/60A.gtf
 		
