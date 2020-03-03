@@ -240,11 +240,9 @@ We can view read alignments to the reference genome with [IGV](http://software.b
         
 ---
 
-## 4. Assess mapping quality
+## 4. Assess mapping quality - HISAT2 Output
 
 Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the whole genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
-
-* **HISAT2 Output**
 
 HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
 
@@ -264,7 +262,7 @@ What is the overall alignment rate?
 
 What are the differences between the files? What are the consequence of specifying `no-mixed` for read mapping?
 
-* **Summary info of BAM file**
+## 4. Assess mapping quality - Info from BAM files
 
 Mapped reads can be found in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well. You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html) and get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
