@@ -50,16 +50,6 @@ Potential aligners include [HISAT2](https://ccb.jhu.edu/software/hisat2/index.sh
 
 Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml)
 
-* **HISAT2 index**
-
-        hisat2-build -f reference_genome.fa reference_genome_db
-
-This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.
-
-## a. PRACTICAL ACTIVITY
-
-Make an index of the reference genome.
-
 * First load an interactive session on ShARC.
 
         qrsh
@@ -72,21 +62,17 @@ Make an index of the reference genome.
 * Copy the reference genome to this new folder
 
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
-        
-* Index the genome
+
+* Index the genome using HISAT2 
 
         hisat2-build -f Hmel2.fa Hmel2
 
-This commands takes around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
+This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.It will take around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
    
 ## 2. Align RNA-seq reads to reference
 
-Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml).
+Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml). We need to supply the trimmed RNA-seq reads and indexed reference genome.
  
- * **Map reads to genome with HISAT2**
- 
-        hisat2 reference_genome forward.fastq reverse.fastq
-		
 There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/hisat2/manual.shtml). While it is often suffient to run HISAT2 with default settings, there are a number of parameters that should be considered:
 
 **-q** Reads are FASTQ files. FASTQ files usually have extension .fq or .fastq. FASTQ is the default format.
@@ -109,9 +95,9 @@ The following two parameters should be specified if it is necessary to obtain ve
 
 HISAT2 outputs a SAM file with the alignment information for each read.
 
-## b. PRACTICAL ACTIVITY
+### Exercise
 
-Map RNA-seq reads to the reference genome. This practical will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `no-mixed`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two Tophat runs, one with `no-mixed` and one without.
+Let's map RNA-seq reads to the reference genome. This exercise will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `no-mixed`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two HISAT2 runs, one with `no-mixed` and one without.
 
 You should submit these commands as jobs to ShARC. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
@@ -121,7 +107,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         mkdir /fastdata/$USER/1.align/HISAT2
         mkdir /fastdata/$USER/1.align/HISAT2/60A
  
-* Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode to do this.
+* Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode `qrsh` to do this.
 
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_1.fq.gz /fastdata/$USER/1.align/Trimmed_data
         cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Trimmed_files/60A_2.fq.gz /fastdata/$USER/1.align/Trimmed_data
@@ -157,13 +143,13 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         qsub HISAT2_60A.sh
         
-* Next, repeat this process to run HISAT2 again but now specifying --no-mixed. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
+* Next, repeat this process to run HISAT2 again but now specifying `--no-mixed`. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
 
         mkdir /fastdata/$USER/1.align/HISAT2/60A_nomixed
-        
         cd /fastdata/$USER/1.align/HISAT2/60A_nomixed
-        
         nano HISAT2_60A_nomixed.sh
+
+* Add this code to your script.
         
         #!/bin/bash
         #$ -l h_rt=00:15:00
@@ -177,7 +163,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		/fastdata/$USER/1.align/ref/Hmel2 \
 		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
 		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
-		-p 2 \
+		-p 1 \
 		-q \
 		--dta \
 		--no-mixed \
@@ -187,7 +173,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Run the script. This will take ~10 minutes to run so move onto the next step.
         
        qsub HISAT2_60A_nomixed.sh
-        
+       
 ---
 
 ## 3. Visualise alignments
@@ -196,37 +182,19 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. 
 
-You need to first sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
-
-        samtools view -Su sample.sam | samtools sort -o sample.sorted.bam
-
-You need to then index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
-
-	samtools index sample.sorted.bam
-
-Then you have to transfer the SAM file, index and reference genome to the Desktop.
-
-Load the reference genome into IGV
-
-        Genomes/Load Genome from File
-
-Load the SAM file into IGV
-
-        File/Load from File
-
-## c. PRACTICAL ACTIVITY
+## Exercise
 
 We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop.
 	
-* You need to sort the SAM file you generated (60A.sam) with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* First sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
 
 		samtools view -Su 60A.sam | samtools sort -o 60A.sorted.bam
 
-* You need to index the new BAM file.
+* You need to then index the BAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
 		samtools index 60A.sorted.bam
 
-* Lets extract reads aligning to one scaffold (Hmel200115). We can do this with [Samtools](http://www.htslib.org/doc/samtools-1.0.html)
+* Let's extract reads aligning to one scaffold (Hmel200115). We can do this with the following [Samtools](http://www.htslib.org/doc/samtools-1.0.html) command.
 	
 	        samtools view -b -h 60A.sorted.bam "Hmel200115" > 60A_Hmel200115.bam
 
@@ -234,7 +202,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        samtools index 60A_Hmel200115.bam
 	
-* copy the BAM file, index and reference genome to your desktop.
+* Copy the follow BAM file, index and reference genome to your desktop.
 	
 	        60A_Hmel200115.bam
 	
@@ -242,7 +210,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        Hmel2.fa
                 
-* Find Integrative Genomics Viewer in the Software Centre or download it to your own laptop.
+* Find `Integrative Genomics Viewer in the Software Centre` or download it from ([IGV](http://software.broadinstitute.org/software/igv/) on your own laptop.
 	
 * Load the reference genome into IGV
 	
@@ -267,62 +235,60 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 		Search Hmel200115 in the search box in IGV viewer. You can also use the scaffold dropdown.
 
 * Do reads map to these exons? Can you see the intronic regions? Is there any evidence for many reads that haven't mapped correctly?
+
+* What do the different read colours mean? Why are there coloured lines? Can you identify any SNPs in your data?
         
 ---
 
 ## 4. Assess mapping quality
 
-Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
+Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the whole genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
 
 * **HISAT2 Output**
 
 HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
 
-* **BAM format**
+## Exercise 
 
-Information about read mapping is specified in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well.
+Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
 
-For example, you might want to identify reads with high quality alignments. This may be because you want to extract a set of reads for downstream analyses. This information is encoded in the BAM/SAM file as [flags](https://samtools.github.io/hts-specs/SAMv1.pdf). The following table gives an overview of the mandatory fields in the SAM format:
+	cat HISAT2_60A.sh.e[add your job number here]
+
+What is the overall alignment rate?
+
+Now open the `scriptname.sh.o.jobnumber` output file from HISAT2 with `no-mixed`.
+	
+	cat HISAT2_60A_nomixed.sh.e[add your job number here]
+	
+What is the overall alignment rate?
+
+What are the differences between the files? What are the consequence of specifying `no-mixed` for read mapping?
+
+* **Summary info of BAM file**
+
+Mapped reads can be found in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well. You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html) and get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
+
+## Exercise
+
+Let's find the information on read mapping from the BAM file. We can do that using the Samtools command `flagstat`.
+
+        samtools flagstat 60A.sorted.bam
+	
+How many reads mapped?
+        
+Next, you might also want to identify reads with high quality alignments. This may be because you want to extract a set of reads for downstream analyses. This information is encoded in the BAM/SAM file as [flags](https://samtools.github.io/hts-specs/SAMv1.pdf). The following table gives an overview of the mandatory fields in the SAM format:
 
 ![alt text](https://github.com/alielw/APS-NGS-day1-PM/blob/master/SAM%20fields.jpg)
 
 The fields that will be most useful are the FLAGS and MAPQ. The Broad Institute have a useful website to understand the [FLAGS](https://broadinstitute.github.io/picard/explain-flags.html). In addition, the MAPQ field indicates the mapping quality of the read.
 
-You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
-
-        samtools view file.bam
-
-You can also get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
-
-        samtools flagstat file.bam
-        
-Eg:
-        
-        16989295 + 0 in total (QC-passed reads + QC-failed reads)
-        1645710 + 0 secondary
-        0 + 0 supplementary
-        0 + 0 duplicates
-        16989295 + 0 mapped (100.00% : N/A)
-        15343585 + 0 paired in sequencing
-        7665434 + 0 read1
-        7678151 + 0 read2
-        13310548 + 0 properly paired (86.75% : N/A)
-        13702202 + 0 with itself and mate mapped
-        1641383 + 0 singletons (10.70% : N/A)
-        70752 + 0 with mate mapped to a different chr
-        39370 + 0 with mate mapped to a different chr (mapQ>=5)
-
-## d. PRACTICAL ACTIVITY 
-
-Open the `.e` output file for your first HISAT2 run and the `.e` output file from HISAT2 with `no-mixed`. How are they different? What are the consequence of specifying `no-mixed` for read mapping?
-
-## e. PRACTICAL ACTIVITY
-
 Count how many reads have all of the following features; are paired, first in the pair, on the reverse strand and also have a read mapped in proper pair. This information is encoded in the FLAG section of the SAM/BAM file. We can do this in interactive mode for the BAM file you already generated (60A.sorted.bam).
 
-* View the first few lines of the BAM file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. Compare this output with the table above. Identify which column contains the FLAG field.
+* View the first few lines of the BAM file with samtools (`samtools view BAM`), Unix pipe (`|`) and Unix `head`. 
 
         samtools view 60A.sorted.bam | head
+
+* Identify which column contains the FLAG field.
 
 * Next, print the FLAG field for the first few lines using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and Unix `head`. 
 
@@ -343,13 +309,6 @@ Count how many reads have all of the following features; are paired, first in th
 
 We can use [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual) to assemble gene transcripts. StringTie is part of the  “classic” RNA-Seq workflow, which includes read mapping with HISAT2 followed by assembly with StringTie. It has replaced the Cufflinks program. Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. StringTie will identify potential new transcripts.
 
-* The Heliconius GFF file is located here
-/usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff
-
-	eg.
-	Hmel200001	AUGUSTUS	gene	254	1306	.	+	.		ID=HMEL035848g1;Name=g17925;stable_id=HMEL035848g1
-	Hmel200001	AUGUSTUS	mRNA	254	1306	.	+	.	ID=HMEL035848g1.t1;Name=g17925.t1;Parent=HMEL035848g1;stable_id=HMEL035848g1.t1;translation_stable_id=HMEL035848g1.t1
-
 StringTie takes as input a BAM file sorted by coordinates. A text file in SAM format which was produced by HISAT2 must be sorted and converted to BAM format using the samtools program. We have already done this earlier for the IGV exercise using the command `samtools view -Su sample.sam | samtools sort -o sample.sorted.bam`.
 
 As an option, a reference annotation file in GTF/GFF3 format can be provided to StringTie. A GTF file contains information about assembled transcripts. In this case, StringTie will prefer to use these "known" genes from the annotation file, and for the ones that are expressed it will compute coverage, TPM and FPKM values. It will also produce additional transcripts to account for RNA-seq data that aren't covered by (or explained by) the annotation. 
@@ -366,19 +325,26 @@ As an option, a reference annotation file in GTF/GFF3 format can be provided to 
 
 **-A path** Gene abundances will be reported (tab delimited format) in the output file with the given name.
 
-## f. PRACTICAL ACTIVITY
+## Exercise
 
 Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual).
 
-* First, make a new folder. Copy over the gff files into this folder.
+* First, make new folders.
 
 		mkdir /fastdata/$USER/2.assemble_transcripts
 		mkdir /fastdata/$USER/2.assemble_transcripts/60A
-        	cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
 
-* Make an executable script where you can specify the job requirements. 
+* Copy over the Heliconius gff files into this folder.
+
+		cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
+
+* Let's look at the gff file.
+		
+		cd /fastdata/$USER/2.assemble_transcripts/60A
+		head Hmel2.gff
+
+* Make an executable script where you can specify the job requirements for StringTie. 
         
-        cd /fastdata/$USER/2.assemble_transcripts/60A
         nano StringTie_60A.sh
         
 * Specify the requirements for ShARC and give the path to the Genomics Software Repository.
