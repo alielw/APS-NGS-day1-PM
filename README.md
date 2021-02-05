@@ -1,6 +1,6 @@
 **_Advanced Data Analysis - Introduction to NGS data analysis_**<br>
 *Department of Animal and Plant Sciences, University of Sheffield*
-APS Advanced Stats Delivery https://github.com/visoca/AdvDataAna-introNGS
+APS Advanced Stats Delivery https://github.com/njnadeau/AdvDataAna-introNGS
 
 # Aligning Illumina RNA-seq data
 #### Alison Wright, Nicola Nadeau, Helen Hipperson
@@ -374,4 +374,4 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         qsub StringTie_60A.sh
 
 ---
-Return to main course page: https://github.com/visoca/AdvDataAna-introNGS
+Return to main course page: https://github.com/njnadeau/AdvDataAna-introNGS
