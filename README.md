@@ -64,7 +64,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://
 	
 * Have a look at the reference genome file
 
-	head Hmel2.fa
+		head Hmel2.fa
 
 * Index the genome using HISAT2 
 
