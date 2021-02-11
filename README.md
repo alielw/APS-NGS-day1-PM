@@ -129,7 +129,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l rmem=5G
         #$ -pe smp 2
         #$ -wd /fastdata/$USER/1.align/HISAT2/60A
-	
         
         source /usr/local/extras/Genomics/.bashrc
 
@@ -189,10 +188,30 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Check the job status of both scripts. Once they have finished, let's check they ran properly.
 
 e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXXXX and HISAT2_60A.sh.eXXXXX in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat`. In the HISAT2_60A.sh.eXXXXX you should see stats on the mapping and the % of reads aligned at the end. **If you do not see this, something has gone wrong and you should fix it before moving on**.
+
+--
+
+## PRACTICAL - 3. Assess mapping quality - HISAT2 Output
+
+HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
+
+Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
+
+	cat HISAT2_60A.sh.e[add your job number here]
+
+What is the overall alignment rate?
+
+Now open the `scriptname.sh.o.jobnumber` output file from HISAT2 with `no-mixed`.
+	
+	cat HISAT2_60A_nomixed.sh.e[add your job number here]
+	
+What is the overall alignment rate?
+
+What are the differences between the files? What are the consequence of specifying `no-mixed` for read mapping?
        
 ---
 
-## PRACTICAL -  3. Visualise alignments
+## PRACTICAL -  4. Visualise alignments
 
 * **Interactive Genome Viewer**
 
@@ -252,31 +271,11 @@ We can view read alignments to the reference genome with [IGV](http://software.b
         
 ---
 
-## PRACTICAL - 4. Assess mapping quality - HISAT2 Output
-
-Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the whole genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
-
-HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
-
-Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
-
-	cat HISAT2_60A.sh.e[add your job number here]
-
-What is the overall alignment rate?
-
-Now open the `scriptname.sh.o.jobnumber` output file from HISAT2 with `no-mixed`.
-	
-	cat HISAT2_60A_nomixed.sh.e[add your job number here]
-	
-What is the overall alignment rate?
-
-What are the differences between the files? What are the consequence of specifying `no-mixed` for read mapping?
-
-## READ - 4. Assess mapping quality - Info from BAM files
+## READ - 5. Assess mapping quality - Info from BAM files
 
 Mapped reads can be found in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well. You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html) and get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-## PRACTICAL - 4. Assess mapping quality - Info from BAM files
+## PRACTICAL - 5. Assess mapping quality - Info from BAM files
 
 Let's find the information on read mapping from the BAM file. We can do that using the Samtools command `flagstat`.
 
@@ -309,11 +308,9 @@ Count how many reads have all of the following features; are paired, first in th
 
 * Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
 
-* Ask a demonstrator for the correct answer!
-
 ---
 
-## READ - 5. Assemble transcripts
+## READ - 6. Assemble transcripts
 
 We can use [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual) to assemble gene transcripts. StringTie is part of the  “classic” RNA-Seq workflow, which includes read mapping with HISAT2 followed by assembly with StringTie. It has replaced the Cufflinks program. Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. StringTie will identify potential new transcripts.
 
@@ -333,7 +330,7 @@ As an option, a reference annotation file in GTF/GFF3 format can be provided to 
 
 **-A path** Gene abundances will be reported (tab delimited format) in the output file with the given name.
 
-## PRACTICAL - 5. Assemble transcripts
+## PRACTICAL - 6. Assemble transcripts
 
 Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual).
 
@@ -346,7 +343,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 
 		cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
 
-* Let's look at the gff file.
+* Let's look at the gff file. This is a list of annotated genes and transcripts in the genome with information on where they are located.
 		
 		cd /fastdata/$USER/2.assemble_transcripts/60A
 		head Hmel2.gff
@@ -359,7 +356,9 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         
         nano StringTie_60A.sh
         
-* Specify the requirements for ShARC and give the path to the Genomics Software Repository.
+* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Remember
+**Indentation is important! Make sure your code looks like below.**
+**Change $USER to your username, otherwise the code will not run**
 
         #!/bin/bash
         #$ -l h_rt=00:15:00
@@ -382,6 +381,9 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 * Finally, submit your job. 
         
         qsub StringTie_60A.sh
+
+* Check the job status. Once it has finished, check it ran properly. StringTie_60A.sh.eXXXXXX should be empty and StringTie_60A.sh.oXXXXX should just have two lines about the Genomics Software Repository.
+
 
 ---
 Return to the main course page: https://github.com/njnadeau/AdvDataAna-introNGS
