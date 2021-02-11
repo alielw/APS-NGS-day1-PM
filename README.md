@@ -120,7 +120,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cd /fastdata/$USER/1.align/HISAT2/60A
         nano HISAT2_60A.sh
         
-* Specify the requirements for ShARC and give the path to the Genomics Software Repository.
+* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Add this to your script. Indentation is important! Make sure your code looks like below.
 
         #!/bin/bash
         #$ -l h_rt=00:15:00
@@ -133,7 +133,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
         source /usr/local/extras/Genomics/.bashrc
 
-* Next, add the following commands to map reads to the reference genome.
+* Underneath, add the following commands to map reads to the reference genome.
 
         hisat2 \
 		/fastdata/$USER/1.align/ref/Hmel2 \
