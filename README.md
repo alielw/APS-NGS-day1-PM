@@ -120,7 +120,9 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cd /fastdata/$USER/1.align/HISAT2/60A
         nano HISAT2_60A.sh
         
-* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Add this to your script. Indentation is important! Make sure your code looks like below.
+* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Add this to your script. 
+**Indentation is important! Make sure your code looks like below.**
+**Change $USER to your username, otherwise the code will not run**
 
         #!/bin/bash
         #$ -l h_rt=00:15:00
@@ -148,6 +150,12 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Finally, submit your job. Only submit this if `hisat2-build` has finished and you have an indexed reference genome. This should take around 10 minutes to run so move onto the next step.
         
         qsub HISAT2_60A.sh
+	
+* Let's check the job status
+
+		qstat
+
+* `r` means the job is running, `qw` is queueing, `eqw` means there is something wrong with your code and you need to fix it. When the job finishes running, it will disappear from the list.
         
 * Next, repeat this process to run HISAT2 again but now specifying `--no-mixed`. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
 
@@ -178,9 +186,13 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		-S /fastdata/$USER/1.align/HISAT2/60A_nomixed/60A.nomixed.sam \
 		--met-file /fastdata/$USER/1.align/HISAT2/60A_nomixed/60A.nomixed.stats
 
-* Run the script. This will take ~10 minutes to run so move onto the next step.
+* Run the script. 
         
        qsub HISAT2_60A_nomixed.sh
+       
+* Check that job status of both scripts. Once they have finished, let's check they ran properly.
+
+e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXXXX and HISAT2_60A.sh.eXXXXX in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat`. In the HISAT2_60A.sh.eXXXXX you should see stats on the mapping and the % of reads aligned at the end. If you do not see this, something has gone wrong and you should fix it before moving on.
        
 ---
 
