@@ -367,4 +367,4 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         qsub StringTie_60A.sh
 
 ---
-Return to main course page: https://github.com/visoca/AdvDataAna-introNGS
+Return to the main course page: https://github.com/njnadeau/AdvDataAna-introNGS
