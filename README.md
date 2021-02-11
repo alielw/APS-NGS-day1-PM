@@ -306,7 +306,7 @@ Count how many reads have all of the following features; are paired, first in th
         first in pair
         on the reverse strand
 
-* Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -f[Column number]`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
+* Finally, count how many reads have this FLAG using samtools (`samtools view BAM`), Unix pipe (`|`) and cut (`cut -fColumn number`), Unix pipe (`|`) and grep (`grep -c "FLAG"`).
 
 ---
 
