@@ -192,7 +192,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
        
 * Check that job status of both scripts. Once they have finished, let's check they ran properly.
 
-e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXXXX and HISAT2_60A.sh.eXXXXX in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat`. In the HISAT2_60A.sh.eXXXXX you should see stats on the mapping and the % of reads aligned at the end. If you do not see this, something has gone wrong and you should fix it before moving on.
+e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXXXX and HISAT2_60A.sh.eXXXXX in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat`. In the HISAT2_60A.sh.eXXXXX you should see stats on the mapping and the % of reads aligned at the end. **If you do not see this, something has gone wrong and you should fix it before moving on**.
        
 ---
 
