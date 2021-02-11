@@ -3,7 +3,7 @@
 APS Advanced Stats Delivery https://github.com/visoca/AdvDataAna-introNGS
 
 # Aligning Illumina RNA-seq data
-#### Alison Wright, Nicola Nadeau, Helen Hipperson
+#### Alison Wright, Nicola Nadeau
 
 The aim of this practical is to learn how to align Illumina RNA-seq data to a reference genome and assemble transcripts. We will be using a dataset of expression data of multiple individuals of *Heliconius melpomene*.
 
