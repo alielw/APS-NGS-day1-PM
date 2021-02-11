@@ -128,7 +128,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -pe smp 2
 		#$ -P training
 		#$ -q training.q
-        	#$ -wd /fastdata/$USER/1.align/HISAT2/60A
+        #$ -wd /fastdata/$USER/1.align/HISAT2/60A
 	
         
         source /usr/local/extras/Genomics/.bashrc
