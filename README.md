@@ -21,7 +21,7 @@ The aim of this practical is to learn how to align Illumina RNA-seq data to a re
 
 ---
 
-## PRACTICAL Initial set up
+## PRACTICAL - Initial set up
 First of all, this tutorial must be run using an interactive session in ShARC. You will also submit jobs to ShARC. For that, you should log in into ShARC with `ssh`, and then request an interactive session with `qrsh`. Your shell prompt should show `sharc-nodeXXX` (XXX being a number between 001 and 172) and not `@sharc-login1` nor `@sharc-login2`.
 
 For this particular tutorial, we are going to create and work on a directory called `align` in your /fastdata/$USER directory. Remember you need to replace $USER with your username.
@@ -38,7 +38,7 @@ It should show something like:
 
 ---
 
-## Programmes
+## READ - Programmes
 
 There are a number of different programs that can be used to align RNA-seq reads to a reference genome. There are two types of aligners: Splice-unaware and Splice-aware. Splice-unaware aligners are not aware of exon/intron junctions and are therefore only appropriate for mapping to a transcriptome. Splice-aware aligners map reads over exon/intro junctions and are appropriate for aligning reads to a genome reference. This is an important point to consider when choosing an aligner and why it is necessary to use different programs for RNA- versus DNA-seq data.
 
@@ -46,7 +46,7 @@ Potential aligners include [HISAT2](https://ccb.jhu.edu/software/hisat2/index.sh
 
 ---
 
-## 1. Prepare reference genome
+## PRACTICAL - 1. Prepare reference genome
 
 Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml)
 
@@ -69,7 +69,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](https://
 
 This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.It will take around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
    
-## 2. Align RNA-seq reads to reference
+## READ - 2. Align RNA-seq reads to reference
 
 Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml). We need to supply the trimmed RNA-seq reads and indexed reference genome.
  
@@ -95,7 +95,7 @@ The following two parameters should be specified if it is necessary to obtain ve
 
 HISAT2 outputs a SAM file with the alignment information for each read.
 
-### Exercise
+## PRACTICAL - 2. Align RNA-seq reads to reference
 
 Let's map RNA-seq reads to the reference genome. This exercise will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `no-mixed`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two HISAT2 runs, one with `no-mixed` and one without.
 
@@ -176,17 +176,13 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
        
 ---
 
-## 3. Visualise alignments
+## PRACTICAL -  3. Visualise alignments
 
 * **Interactive Genome Viewer**
 
 We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop. 
-
-## Exercise
-
-We can view read alignments to the reference genome with [IGV](http://software.broadinstitute.org/software/igv/) on the Desktop.
 	
-* First sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
+* First, sort the SAM file with [Samtools](http://www.htslib.org/doc/samtools-1.0.html). By default Samtools sorts files by coordinate. It is easier to handle BAM files as they are compressed so at the same time we convert to a BAM format.
 
 		samtools view -Su 60A.sam | samtools sort -o 60A.sorted.bam
 
@@ -209,9 +205,9 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	        60A_Hmel200115.bam.bai
 	
 	        Hmel2.fa
+		
+* Now you need to download the appropriate [IGV](http://software.broadinstitute.org/software/igv/) viewer onto your desktop. Download [here](http://software.broadinstitute.org/software/igv/download)
                 
-* Find `Integrative Genomics Viewer in the Software Centre` or download it from ([IGV](http://software.broadinstitute.org/software/igv/) on your own laptop.
-	
 * Load the reference genome into IGV
 	
 	        Genomes/Load Genome from File
@@ -240,13 +236,11 @@ We can view read alignments to the reference genome with [IGV](http://software.b
         
 ---
 
-## 4. Assess mapping quality - HISAT2 Output
+## PRACTICAL - 4. Assess mapping quality - HISAT2 Output
 
 Whilst IGV allows us to examine specific regions of the genome, it not easy to summarise this information across the whole genome. It is useful to measure the general performance of the aligner for a number of reasons including i) choosing the best performing aligner, ii) optimising mapping parameters, or iii) identifying a subset of high quality reads. There are a number of tools we can use to calculate quality statistics of mapping quality.
 
 HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
-
-## Exercise 
 
 Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
 
@@ -262,11 +256,11 @@ What is the overall alignment rate?
 
 What are the differences between the files? What are the consequence of specifying `no-mixed` for read mapping?
 
-## 4. Assess mapping quality - Info from BAM files
+## READ - 4. Assess mapping quality - Info from BAM files
 
 Mapped reads can be found in the BAM file. BAM and SAM formats are designed to contain the same information. The [SAM format](https://en.wikipedia.org/wiki/SAM_(file_format)) is more human readable, and easier to process by conventional text based processing programs. The BAM format provides binary versions of most of the same data, and is designed to compress reasonably well. You can visualise a BAM file using [Samtools](http://www.htslib.org/doc/samtools-1.0.html) and get general statistics about the BAM files eg the number of mapped reads using [Samtools](http://www.htslib.org/doc/samtools-1.0.html).
 
-## Exercise
+## PRACTICAL - 4. Assess mapping quality - Info from BAM files
 
 Let's find the information on read mapping from the BAM file. We can do that using the Samtools command `flagstat`.
 
@@ -303,7 +297,7 @@ Count how many reads have all of the following features; are paired, first in th
 
 ---
 
-## 5. Assemble transcripts
+## READ - 5. Assemble transcripts
 
 We can use [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual) to assemble gene transcripts. StringTie is part of the  “classic” RNA-Seq workflow, which includes read mapping with HISAT2 followed by assembly with StringTie. It has replaced the Cufflinks program. Although often you may have a set of annotated genes in the reference genome, and therefore a reference gtf, this may be incomplete and some genes may not be annotated. StringTie will identify potential new transcripts.
 
@@ -323,7 +317,7 @@ As an option, a reference annotation file in GTF/GFF3 format can be provided to 
 
 **-A path** Gene abundances will be reported (tab delimited format) in the output file with the given name.
 
-## Exercise
+## PRACTICAL - 5. Assemble transcripts
 
 Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual).
 
