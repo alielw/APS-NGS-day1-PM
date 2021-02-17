@@ -74,9 +74,9 @@ This command indexes the reference genome fasta file and outputs six files: .1.h
    
 ## READ - 2. Align RNA-seq reads to reference
 
-Map RNA-seq reads to a reference genome using [HISAT2](https://ccb.jhu.edu/software/hisat2/manual.shtml). We need to supply the trimmed RNA-seq reads and indexed reference genome.
+Map RNA-seq reads to a reference genome using [HISAT2](http://daehwankimlab.github.io/hisat2/manual/). We need to supply the trimmed RNA-seq reads and indexed reference genome.
  
-There are many different mapping parameters you can specify, see [here](https://ccb.jhu.edu/software/hisat2/manual.shtml). While it is often suffient to run HISAT2 with default settings, there are a number of parameters that should be considered:
+There are many different mapping parameters you can specify, see [here](http://daehwankimlab.github.io/hisat2/manual/). While it is often suffient to run HISAT2 with default settings, there are a number of parameters that should be considered:
 
 **-q** Reads are FASTQ files. FASTQ files usually have extension .fq or .fastq. FASTQ is the default format.
 
