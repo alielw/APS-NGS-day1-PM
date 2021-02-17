@@ -369,8 +369,8 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         #$ -l rmem=5G
         #$ -pe smp 3
         #$ -wd /fastdata/$USER/2.assemble_transcripts/60A
-	#$ -P training
-	#$ -q training.q
+		#$ -P training
+		#$ -q training.q
         
         source /usr/local/extras/Genomics/.bashrc
 
