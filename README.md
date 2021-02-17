@@ -178,7 +178,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 		/fastdata/$USER/1.align/ref/Hmel2 \
 		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
 		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
-		-p 1 \
+		-p 2 \
 		-q \
 		--dta \
 		--no-mixed \
