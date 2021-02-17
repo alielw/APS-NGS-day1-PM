@@ -255,16 +255,6 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 
 	        File/Load from File
 
-* Lets look at the scaffold `Hmel200115`. According to the gff file, there is one annotated coding gene on this scaffold with three exons.
-
-		grep "Hmel20011" /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff
-        
-        	scaffold        feature start   stop
-        	Hmel200115	gene	1	1683	
-        	Hmel200115	exon	1	415
-        	Hmel200115	exon	496	1280
-        	Hmel200115	exon	1564	1683
-
 * Using the coordinates above, locate the scaffold & exons in the IGV viewer. 
 
 		Search Hmel200115 in the search box in IGV viewer. You can also use the scaffold dropdown.
@@ -283,7 +273,8 @@ Mapped reads can be found in the BAM file. BAM and SAM formats are designed to c
 
 Let's find the information on read mapping from the BAM file. We can do that using the Samtools command `flagstat`.
 
-        samtools flagstat 60A.sorted.bam
+        cd /fastdata/bo1aewr/1.align/HISAT2/60A
+	samtools flagstat 60A.sorted.bam
 	
 How many reads mapped?
         
@@ -352,9 +343,13 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 		cd /fastdata/$USER/2.assemble_transcripts/60A
 		head Hmel2.gff
 
-* How many transcripts are there in the gff file? You can count this with Unix (`wc -l`) and minus one for the header.
+* How many line are there in the gff file? You can count this with Unix (`wc -l`).
 
         wc -l Hmel2.gff
+	
+* How many genes are there in the gff file? You can count this with Unix (`grep`).
+
+		grep -c "gene" Hmel2.gff
 
 * Make an executable script where you can specify the job requirements for StringTie. 
         
