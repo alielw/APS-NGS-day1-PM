@@ -70,7 +70,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](http://d
 
         hisat2-build -f Hmel2.fa Hmel2
 
-This command indexes the reference genome fasta file and outputs six files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.It will take around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
+This command indexes the reference genome fasta file and outputs eight files: .1.ht2  .2.ht2  .3.ht2  .4.ht2  .5.ht2  .6.ht2 ... These files constitute the index.It will take around five minutes to finish. While this is running, move onto section two to familiarise yourself with HISAT2 and prepare your command to map reads to the reference genome. When `hisat2-build` has finished you can then run HISAT2.
    
 ## READ - 2. Align RNA-seq reads to reference
 
