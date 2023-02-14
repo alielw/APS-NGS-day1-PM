@@ -129,7 +129,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l rmem=5G
         #$ -pe smp 2
         #$ -wd /fastdata/$USER/1.align/HISAT2/60A
-
         
         source /usr/local/extras/Genomics/.bashrc
 
@@ -168,7 +167,6 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         #$ -l rmem=5G
         #$ -pe smp 2
         #$ -wd /fastdata/$USER/1.align/HISAT2/60A_nomixed
-
         
         source /usr/local/extras/Genomics/.bashrc
         
@@ -362,7 +360,6 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         #$ -l rmem=5G
         #$ -pe smp 3
         #$ -wd /fastdata/$USER/2.assemble_transcripts/60A
-
         
         source /usr/local/extras/Genomics/.bashrc
 
