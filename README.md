@@ -60,7 +60,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](http://d
 
 * Copy the reference genome to this new folder
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2024/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
+        cp /shared/genomicsdb2/shared/workshops/NGS_AdvSta_2024/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
 	
 * Have a look at the reference genome file
 
