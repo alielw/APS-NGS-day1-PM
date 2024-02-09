@@ -110,7 +110,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         mkdir /fastdata/$USER/1.align/HISAT2
         mkdir /fastdata/$USER/1.align/HISAT2/60A
  
-* Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode `qrsh` to do this.
+* Copy two fastq files into your output folder. These are subsampled versions of the files you generated yourself to speed up computational time in this practical. You must be in interactive mode `srun --pty bash -l` to do this.
 
         cp /shared/genomicsdb2/shared/workshops/NGS_AdvSta_2024/NGS_data/Trimmed_files/60A_1.fq.gz /fastdata/$USER/1.align/Trimmed_data
         cp /shared/genomicsdb2/shared/workshops/NGS_AdvSta_2024/NGS_data/Trimmed_files/60A_2.fq.gz /fastdata/$USER/1.align/Trimmed_data
