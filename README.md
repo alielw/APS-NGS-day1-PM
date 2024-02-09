@@ -51,7 +51,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](http://d
 
 * First load an interactive session on ShARC.
 
-        qrsh
+        srun --pty bash -l
 
 * Make a new folder in your align folder in fastdata. Remember to change $USER to your username.
 
@@ -60,7 +60,7 @@ Prepare the reference genome before mapping RNA-seq reads with [HISAT2](http://d
 
 * Copy the reference genome to this new folder
 
-        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
+        cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2024/NGS_data/Reference/Hmel2.fa /fastdata/$USER/1.align/ref
 	
 * Have a look at the reference genome file
 
@@ -125,11 +125,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 **Change $USER to your username, otherwise the code will not run**
 
         #!/bin/bash
-        #$ -l h_rt=00:15:00
-        #$ -l rmem=5G
-        #$ -pe smp 2
-        #$ -wd /fastdata/$USER/1.align/HISAT2/60A
-        
+        #SBATCH --time=00:15:00
+        #SBATCH --mem=5G
+        #SBATCH --cpus-per-task=2
+               
         source /usr/local/extras/Genomics/.bashrc
 
 * Underneath, add the following commands to map reads to the reference genome.
@@ -146,13 +145,13 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         
 * Finally, submit your job. Only submit this if `hisat2-build` has finished and you have an indexed reference genome. This should take around 10 minutes to run so move onto the next step.
         
-        qsub HISAT2_60A.sh
+        sbatch HISAT2_60A.sh
 	
 * Let's check the job status
 
-		qstat
+		squeue --me
 
-* `r` means the job is running, `qw` is queueing, `eqw` means there is something wrong with your code and you need to fix it. When the job finishes running, it will disappear from the list.
+* `R` means the job is running, `PD` is pending (waiting for resource to be available), other codes including error codes can be found [here](https://slurm.schedmd.com/squeue.html#SECTION_JOB-STATE-CODES). When the job finishes running, it will disappear from the list.
         
 * Next, repeat this process to run HISAT2 again but now specifying `--no-mixed`. You need to create a new working directory and executable script. It is essential that you specify the new output folder and working directory to ensure files aren't overwritten. You need to replace `$USER` with your username.
 
