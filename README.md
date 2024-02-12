@@ -372,7 +372,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 		
 * Finally, submit your job. 
         
-        qsub StringTie_60A.sh
+        sbatch StringTie_60A.sh
 
 * Check the job status. Once it has finished, check it ran properly. StringTie_60A.sh.eXXXXXX should be empty and StringTie_60A.sh.oXXXXX should just have two lines about the Genomics Software Repository. The script should have generated two new files `60A.gtf` and `60A.gene_abund`. We will learn about these in the next session.
 
