@@ -162,11 +162,10 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 * Add this code to your script.
         
         #!/bin/bash
-        #$ -l h_rt=00:15:00
-        #$ -l rmem=5G
-        #$ -pe smp 2
-        #$ -wd /fastdata/$USER/1.align/HISAT2/60A_nomixed
-        
+        #SBATCH --time=00:15:00
+        #SBATCH --mem=5G
+        #SBATCH --cpus-per-task=2
+               
         source /usr/local/extras/Genomics/.bashrc
         
         hisat2 \
@@ -182,7 +181,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
 
 * Run the script. 
         
-       qsub HISAT2_60A_nomixed.sh
+       sbatch HISAT2_60A_nomixed.sh
        
 * Check the job status of both scripts. Once they have finished, let's check they ran properly.
 
@@ -355,11 +354,10 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 **Change $USER to your username, otherwise the code will not run**
 
         #!/bin/bash
-        #$ -l h_rt=00:15:00
-        #$ -l rmem=5G
-        #$ -pe smp 3
-        #$ -wd /fastdata/$USER/2.assemble_transcripts/60A
-        
+        #SBATCH --time=00:15:00
+        #SBATCH --mem=5G
+        #SBATCH --cpus-per-task=3
+          
         source /usr/local/extras/Genomics/.bashrc
 
 * Next, add the following commands to assemble transcripts.
