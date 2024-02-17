@@ -185,7 +185,7 @@ You should submit these commands as jobs to Bessemer. Our data is paired end, st
        
 * Check the job status of both scripts. Once they have finished, let's check they ran properly.
 
-e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXXXX and HISAT2_60A.sh.eXXXXX in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat`. In the HISAT2_60A.sh.eXXXXX you should see stats on the mapping and the % of reads aligned at the end. **If you do not see this, something has gone wrong and you should fix it before moving on**.
+e.g when HISAT2_60A.sh has finished there should be a files slurm-XXXXXxx.out in the /fastdata/$USER/1.align/HISAT2/60A. Look at these files with `cat` or `less`. In the slurm-XXXXXxx.out you should see stats on the mapping and the % of reads aligned at the end. **If you do not see this, something has gone wrong and you should fix it before moving on**.
 
 --
 
@@ -193,7 +193,7 @@ e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXX
 
 HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `slurm-jobnumber.out` output file when you ran HISAT2 on Bessemer. 
 
-Open the `slurm-jobnumber.out` output file for your first HISAT2 run using 'cat' or 'less'.
+Open the `slurm-jobnumber.out` output file for your first HISAT2 run using `cat` or `less`.
 
 What is the overall alignment rate?
 
