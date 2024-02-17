@@ -227,7 +227,7 @@ We can view read alignments to the reference genome with [IGV](http://software.b
 	
 	        samtools index 60A_Hmel200115.bam
 	
-* Copy the follow BAM file, index and reference genome to your desktop.
+* Copy the following BAM file, index and reference genome to your desktop.
 	
 	        60A_Hmel200115.bam
 	
