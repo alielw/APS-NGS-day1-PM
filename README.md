@@ -326,7 +326,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
 
 * Copy over the Heliconius gff files into this folder.
 
-		cp /usr/local/extras/Genomics/workshops/NGS_AdvSta_2020/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
+		cp /shared/genomicsdb2/shared/workshops/NGS_AdvSta_2024/NGS_data/Reference/Hmel2.gff /fastdata/$USER/2.assemble_transcripts/60A
 
 * Let's look at the gff file. This is a list of annotated genes and transcripts in the genome with information on where they are located.
 		
