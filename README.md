@@ -191,17 +191,13 @@ e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXX
 
 ## PRACTICAL - 3. Assess mapping quality - HISAT2 Output
 
-HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on Bessemer. 
+HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `slurm-jobnumber.out` output file when you ran HISAT2 on Bessemer. 
 
-Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
-
-	cat HISAT2_60A.sh.e[add your job number here]
+Open the `slurm-jobnumber.out` output file for your first HISAT2 run using 'cat' or 'less'.
 
 What is the overall alignment rate?
 
-Now open the `scriptname.sh.o.jobnumber` output file from HISAT2 with `no-mixed`.
-	
-	cat HISAT2_60A_nomixed.sh.e[add your job number here]
+Now open the `slurm-jobnumber.out` output file from HISAT2 with `no-mixed`.
 	
 What is the overall alignment rate?
 
