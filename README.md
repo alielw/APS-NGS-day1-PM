@@ -49,7 +49,7 @@ Potential aligners include [HISAT2](http://daehwankimlab.github.io/hisat2/manual
 
 Prepare the reference genome before mapping RNA-seq reads with [HISAT2](http://daehwankimlab.github.io/hisat2/manual/)
 
-* First load an interactive session on ShARC.
+* First load an interactive session on Bessemer.
 
         srun --pty bash -l
 
@@ -102,7 +102,7 @@ HISAT2 outputs a SAM file with the alignment information for each read.
 
 Let's map RNA-seq reads to the reference genome. This exercise will illustrate the effect of different parameters on the stringency of mapping. In particular, we will focus on the effect of `no-mixed`. In some cases, such as for SNP calling, we may want to ensure that mapping is particularly stringent and that we have high confidence a read is correctly aligned. We can ensure higher confidence in our mapping by specifying `no-mixed`, which means that a read is only reported if both pairs align to the reference. You can compare mapping statistics between two HISAT2 runs, one with `no-mixed` and one without.
 
-You should submit these commands as jobs to ShARC. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
+You should submit these commands as jobs to Bessemer. Our data is paired end, strand-specific and has quality scores in phred33 format. We will focus on one individual (60A). 
 
 * First, make some output folders.
 
@@ -120,7 +120,7 @@ You should submit these commands as jobs to ShARC. Our data is paired end, stran
         cd /fastdata/$USER/1.align/HISAT2/60A
         nano HISAT2_60A.sh
         
-* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Add this to your script. 
+* Specify the requirements for Bessemer and give the path to the Genomics Software Repository. Add this to your script. 
 **Indentation is important! Make sure your code looks like below.**
 **Change $USER to your username, otherwise the code will not run**
 
@@ -191,7 +191,7 @@ e.g when HISAT2_60A.sh has finished there should be two files HISAT2_60A.sh.oXXX
 
 ## PRACTICAL - 3. Assess mapping quality - HISAT2 Output
 
-HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on SHARC. 
+HISAT2 produces various statistics including i) reads processed, ii) number of reads mapped iii) number of pairs mapped. This information will be saved in the `scriptname.sh.e.jobnumber` output file when you ran HISAT2 on Bessemer. 
 
 Open the `scriptname.sh.e.jobnumber` output file for your first HISAT2 run.
 
@@ -349,7 +349,7 @@ Assemble transcripts using [StringTie](https://ccb.jhu.edu/software/stringtie/in
         
         nano StringTie_60A.sh
         
-* Specify the requirements for ShARC and give the path to the Genomics Software Repository. Remember
+* Specify the requirements for Bessemer and give the path to the Genomics Software Repository. Remember
 **Indentation is important! Make sure your code looks like below.**
 **Change $USER to your username, otherwise the code will not run**
 
