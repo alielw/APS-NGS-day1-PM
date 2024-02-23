@@ -135,15 +135,17 @@ source /usr/local/extras/Genomics/.bashrc
 
 * Underneath, add the following commands to map reads to the reference genome.
 
-        hisat2 \
-		/fastdata/$USER/1.align/ref/Hmel2 \
-		-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
-		-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
-		-p 2 \
-		-q \
-		--dta \
-		-S /fastdata/$USER/1.align/HISAT2/60A/60A.sam \
-		--met-file /fastdata/$USER/1.align/HISAT2/60A/60A.stats
+```bash
+hisat2 \
+	/fastdata/$USER/1.align/ref/Hmel2 \
+	-1 /fastdata/$USER/1.align/Trimmed_data/60A_1.fq.gz \
+	-2 /fastdata/$USER/1.align/Trimmed_data/60A_2.fq.gz \
+	-p 2 \
+	-q \
+	--dta \
+	-S /fastdata/$USER/1.align/HISAT2/60A/60A.sam \
+	--met-file /fastdata/$USER/1.align/HISAT2/60A/60A.stats
+```
         
 * Finally, submit your job. Only submit this if `hisat2-build` has finished and you have an indexed reference genome. This should take around 10 minutes to run so move onto the next step.
         
