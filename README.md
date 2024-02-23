@@ -124,12 +124,12 @@ You should submit these commands as jobs to Bessemer. Our data is paired end, st
 **Indentation is important! Make sure your code looks like below.**
 **Change $USER to your username, otherwise the code will not run**
 
-        #!/bin/bash
-        #SBATCH --time=00:15:00
-        #SBATCH --mem=5G
-        #SBATCH --cpus-per-task=2
+#!/bin/bash
+#SBATCH --time=00:15:00
+#SBATCH --mem=5G
+#SBATCH --cpus-per-task=2
                
-        source /usr/local/extras/Genomics/.bashrc
+source /usr/local/extras/Genomics/.bashrc
 
 * Underneath, add the following commands to map reads to the reference genome.
 
